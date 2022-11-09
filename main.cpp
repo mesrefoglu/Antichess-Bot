@@ -586,9 +586,11 @@ int main(int argc, char *argv[])
   Board board;
   board.print();
   string move;
-  if (argv[0] == "black") // player is black
+  string argv1 = argv[1];
+  uint8_t ai = argv1 == "black" ? Piece::White : Piece::Black;
+  if (argv1 == "black") // player is black
   {
-    vector<string> moves = board.findPossibleMoves(Piece::White);
+    vector<string> moves = board.findPossibleMoves(ai);
     board.makeMove(moves[0]);
     for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << endl;
@@ -602,7 +604,7 @@ int main(int argc, char *argv[])
       break;
     board.makeMove(move);
     board.print();
-    vector<string> moves = board.findPossibleMoves(argv[0] == "black" ? Piece::White : Piece::Black);
+    vector<string> moves = board.findPossibleMoves(ai);
     cout << "Possible moves:" << endl;
     for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << endl;
