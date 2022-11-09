@@ -242,7 +242,7 @@ public:
               takeFound = true;
               moves.clear();
             }
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
           }
           if (square[i - 9].x & opposite && i % 8 != 0)
           {
@@ -251,15 +251,15 @@ public:
               takeFound = true;
               moves.clear();
             }
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
-          if (square[i - 8].x == Piece::None && !takeFound)
+          if (!takeFound && square[i - 8].x == Piece::None)
           {
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
-          if (square[i - 16].x == Piece::None && !square[i].hasMoved && !takeFound)
+          if (!takeFound && !square[i].hasMoved && square[i - 16].x == Piece::None)
           {
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 16));
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 16));
           }
         }
         else
