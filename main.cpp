@@ -87,6 +87,24 @@ public:
     square[from] = Piece(Piece::None);
 
     uint8_t piece = square[to].x & 63;
+    //Promotion Case:
+    if (length(move) > 4) {
+        // Promote to appropriate piece
+        switch (move[4]) {
+            case 'q':
+                square[to].x = (square[t0] | 63) ^ (~Piece::Queen);
+                break;
+            case 'r':
+                square[to].x = (square[t0] | 63) ^ (~Piece::Rook);
+                break;
+            case 'b':
+                square[to].x = (square[t0] | 63) ^ (~Piece::Bishop);
+                break;
+            case 'n':
+                square[to].x = (square[t0] | 63) ^ (~Piece::Knight);
+                break;
+        }
+    }
     // Castling Case:
     if (piece == Piece::King && abs(from%8 - to%8) == 2) {
         if (move == "e1g1") {
