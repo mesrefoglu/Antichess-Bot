@@ -92,16 +92,16 @@ public:
         // Promote to appropriate piece
         switch (move[4]) {
             case 'q':
-                square[to].x = (square[t0] | 63) ^ (~Piece::Queen);
+                square[to].x = (square[to] | 63) ^ (~Piece::Queen);
                 break;
             case 'r':
-                square[to].x = (square[t0] | 63) ^ (~Piece::Rook);
+                square[to].x = (square[to] | 63) ^ (~Piece::Rook);
                 break;
             case 'b':
-                square[to].x = (square[t0] | 63) ^ (~Piece::Bishop);
+                square[to].x = (square[to] | 63) ^ (~Piece::Bishop);
                 break;
             case 'n':
-                square[to].x = (square[t0] | 63) ^ (~Piece::Knight);
+                square[to].x = (square[to] | 63) ^ (~Piece::Knight);
                 break;
         }
     }
