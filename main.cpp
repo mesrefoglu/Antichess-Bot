@@ -71,7 +71,7 @@ public:
   {
     int from = (move[0] - 'a') + 56 - (move[1] - '1') * 8;
     int to = (move[2] - 'a') + 56 - (move[3] - '1') * 8;
-    square[to] = square[from];
+    square[to].x = square[from].x;
     square[to].hasMoved = true;
     square[from] = Piece(Piece::None);
     // Reset en passantable flags
