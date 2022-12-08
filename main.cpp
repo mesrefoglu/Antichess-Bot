@@ -76,11 +76,9 @@ public:
     }
     int from = (move[0] - 'a') + 56 - (move[1] - '1') * 8;
     int to = (move[2] - 'a') + 56 - (move[3] - '1') * 8;
-    cout << (int)(square[to].x & 63) << endl;
     square[to] = square[from];
     square[to].hasMoved = true;
     square[from] = Piece(Piece::None);
-    cout << (int)((square[to].x & 63) == Piece::King) << endl;
     // Promotion Case:
     if (move.length() == 5)
     {
