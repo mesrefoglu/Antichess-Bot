@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
-#include <bitset>
 #include <vector>
-#include <cstdlib>
+#include <bitset>
 
 using namespace std;
 
@@ -14,6 +13,7 @@ class Piece
 public:
   uint8_t x;
   bool hasMoved;
+  bool enPassantable;
 
   Piece() : x(0){};
   Piece(uint8_t x) : x(x){};
@@ -29,12 +29,10 @@ public:
   const static uint8_t Black = 128;
 };
 
-
 class Board
 {
 public:
   Piece square[64];
-  string lastMove;
   // Initialize the board
   Board()
   {
@@ -61,19 +59,16 @@ public:
     square[61] = Piece(Piece::Bishop | Piece::White);
     square[62] = Piece(Piece::Knight | Piece::White);
     square[63] = Piece(Piece::Rook | Piece::White);
-    // empty str last move
-    lastMove = ""
   }
 
   // Makes move given input, no move validation
   // Coordinate algebraic notation, examples:
   // Normal move: e2e4
   // Pawn promotion: e7e8q
-  // Castling as the King's two-square move: e1g1 
+  // Castling as the King's two-square move: e1g1
   // En Passant, requires storage of last move: e5f6
   void makeMove(string move)
   {
-    // Perhaps uneccesary since we won't validate input moves
     if (move == "")
     {
       cout << "No move" << endl;
@@ -81,65 +76,49 @@ public:
     }
     int from = (move[0] - 'a') + 56 - (move[1] - '1') * 8;
     int to = (move[2] - 'a') + 56 - (move[3] - '1') * 8;
-    Piece priorPiece = square[to]
+    cout << (int)(square[to].x & 63) << endl;
     square[to] = square[from];
     square[to].hasMoved = true;
     square[from] = Piece(Piece::None);
-
-    uint8_t piece = square[to].x & 63;
-    //Promotion Case:
-    if (length(move) > 4) {
-        // Promote to appropriate piece
-        switch (move[4]) {
-            case 'q':
-                square[to].x = (square[to] | 63) ^ (~Piece::Queen);
-                break;
-            case 'r':
-                square[to].x = (square[to] | 63) ^ (~Piece::Rook);
-                break;
-            case 'b':
-                square[to].x = (square[to] | 63) ^ (~Piece::Bishop);
-                break;
-            case 'n':
-                square[to].x = (square[to] | 63) ^ (~Piece::Knight);
-                break;
-        }
+    cout << (int)((square[to].x & 63) == Piece::King) << endl;
+    // Promotion Case:
+    if (move.length() == 5)
+    {
+      if (move[4] == 'q')
+        square[to].x = Piece::Queen | (square[to].x & Piece::White);
+      else if (move[4] == 'r')
+        square[to].x = Piece::Rook | (square[to].x & Piece::White);
+      else if (move[4] == 'b')
+        square[to].x = Piece::Bishop | (square[to].x & Piece::White);
+      else if (move[4] == 'n')
+        square[to].x = Piece::Knight | (square[to].x & Piece::White);
     }
     // Castling Case:
-    if (piece == Piece::King && abs(from%8 - to%8) == 2) {
-        if (move == "e1g1") {
-            square[61] = square[63];
-            square[61].hasMoved = true;
-            square[63] = Piece(Piece::None);
-        }
-        else if (move == "e1c1") {
-            square[59] = square[56];
-            square[59].hasMoved = true;
-            square[56] = Piece(Piece::None);
-        }
-        else if (move == "e8g8") {
-            square[5] = square[7];
-            square[5].hasMoved = true;
-            square[7] = Piece(Piece::None);
-        }
-        else {// move == "e8c8"
-            square[3] = square[0];
-            square[3].hasMoved = true;
-            square[0] = Piece(Piece::None);
-        }
+    else if ((square[to].x & 63) == Piece::King)
+    {
+      cout << "Got here" << endl;
+      if (to == 2)
+      {
+        square[0] = Piece(Piece::None);
+        square[3] = Piece(Piece::Rook | Piece::Black);
+      }
+      else if (to == 6)
+      {
+        square[7] = Piece(Piece::None);
+        square[5] = Piece(Piece::Rook | Piece::Black);
+      }
+      if (to == 58)
+      {
+        square[56] = Piece(Piece::None);
+        square[59] = Piece(Piece::Rook | Piece::White);
+      }
+      else if (to == 62)
+      {
+        cout << "Should be here" << endl;
+        square[63] = Piece(Piece::None);
+        square[61] = Piece(Piece::Rook | Piece::White);
+      }
     }
-    // En Passant Case:
-    // Only for pawns
-    if (piece == Piece::Pawn) {
-        // Pawn must've moved diagonally into an empty space
-        if (priorPiece == Piece::None && move[0] != move[2]) {
-            // then capture pawn from last move
-            int lastMoveTo = (lastMove[2] - 'a') + 56 - (lastMove[3] - '1') * 8;
-            square[lastMoveTo] = Piece(Piece::None)
-        }
-    }
-    // Update board property lastMove
-    lastMove = move;
   }
 
   string toAlgebraic(int square)
