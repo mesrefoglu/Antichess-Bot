@@ -647,9 +647,14 @@ int main(int argc, char *argv[])
   Board board;
   board.print();
   string move;
-  string argv1 = argv[1];
-  uint8_t ai = argv1 == "black" ? Piece::White : Piece::Black;
-  if (argv1 == "black") // player is black
+  string argv1 = "";
+  uint8_t ai = 0;
+  if (argc == 2) // if there is an ai colour argument
+  {
+    argv1 = argv[1];
+    ai = argv1 == "black" ? Piece::White : Piece::Black;
+  }
+  if (argv1 == "white") // ai is white, player is black
   {
     vector<string> moves = board.findPossibleMoves(ai);
     board.makeMove(moves[0]);
@@ -657,21 +662,37 @@ int main(int argc, char *argv[])
       cout << moves[i] << endl;
     board.print();
   }
-  while (move != "end")
+  else if (argv1 == "black") // ai is black, player is white
   {
-    cout << "Make a move..." << endl;
-    cin >> move;
-    if (move == "end")
-      break;
-    board.makeMove(move);
-    board.print();
-    vector<string> moves = board.findPossibleMoves(ai);
-    cout << "Possible moves:" << endl;
-    for (int i = 0; i < moves.size(); i++)
-      cout << moves[i] << endl;
-    cout << "Making move: " << moves[0] << endl;
-    board.makeMove(moves[0]);
-    board.print();
+    while (move != "end")
+    {
+      cout << "Make a move..." << endl;
+      cin >> move;
+      if (move == "end")
+        break;
+      board.makeMove(move);
+      board.print();
+      vector<string> moves = board.findPossibleMoves(ai);
+      cout << "Possible moves:" << endl;
+      for (int i = 0; i < moves.size(); i++)
+        cout << moves[i] << endl;
+      cout << "Making move: " << moves[0] << endl;
+      board.makeMove(moves[0]);
+      board.print();
+    }
   }
+  else // player vs player
+  {
+    while (move != "end")
+    {
+      cout << "Make a move..." << endl;
+      cin >> move;
+      if (move == "end")
+        break;
+      board.makeMove(move);
+      board.print();
+    }
+  }
+
   return 0;
 }
