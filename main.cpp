@@ -69,16 +69,17 @@ public:
   // En Passant, requires storage of last move: e5f6
   void makeMove(string move)
   {
-    if (move == "")
-    {
-      cout << "No move" << endl;
-      return;
-    }
     int from = (move[0] - 'a') + 56 - (move[1] - '1') * 8;
     int to = (move[2] - 'a') + 56 - (move[3] - '1') * 8;
     square[to] = square[from];
     square[to].hasMoved = true;
     square[from] = Piece(Piece::None);
+    // Reset en passantable flags
+    for (int i = 0; i < 64; i++)
+    {
+      if (i != to) // Don't reset the flag for the square the piece is moving to (in case it's enPassantable)
+        square[i].enPassantable = false;
+    }
     // Promotion Case:
     if (move.length() == 5)
     {
@@ -116,6 +117,18 @@ public:
         square[63] = Piece(Piece::None);
         square[61] = Piece(Piece::Rook | Piece::White);
       }
+    }
+    // En Passant Case:
+    else if ((square[to].x & 63) == Piece::Pawn)
+    {
+      if (to == from + 16)
+        square[from + 8].enPassantable = true;
+      else if (to == from - 16)
+        square[from - 8].enPassantable = true;
+      else if ((to == from + 7 || to == from + 9) && square[to].enPassantable)
+        square[to - 8] = Piece(Piece::None);
+      else if ((to == from - 7 || to == from - 9) && square[to].enPassantable)
+        square[to + 8] = Piece(Piece::None);
     }
   }
 
