@@ -84,13 +84,13 @@ public:
     if (move.length() == 5)
     {
       if (move[4] == 'q')
-        square[to].x = Piece::Queen | (square[to].x & Piece::White);
+        square[to].x = Piece::Queen | (square[to].x & Piece::White ? Piece::White : Piece::Black);
       else if (move[4] == 'r')
-        square[to].x = Piece::Rook | (square[to].x & Piece::White);
+        square[to].x = Piece::Rook | (square[to].x & Piece::White ? Piece::White : Piece::Black);
       else if (move[4] == 'b')
-        square[to].x = Piece::Bishop | (square[to].x & Piece::White);
+        square[to].x = Piece::Bishop | (square[to].x & Piece::White ? Piece::White : Piece::Black);
       else if (move[4] == 'n')
-        square[to].x = Piece::Knight | (square[to].x & Piece::White);
+        square[to].x = Piece::Knight | (square[to].x & Piece::White ? Piece::White : Piece::Black);
     }
     // Castling Case:
     else if ((square[to].x & 63) == Piece::King)
