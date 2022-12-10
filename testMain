@@ -671,12 +671,24 @@ public:
                   inCheck = true;
                   break;
               }
+              else if (square[i].x & Piece::King && kingPos - i <= 8) {
+                  inCheck = true;
+                  break;
+              }
           }
           if (!inCheck) {
               for (int i = kingPos - 7; i >= 0 && i%8 != 0; i -= 7) {
                   if (square[i].x == 0 || i == from) continue;
                   else if (square[i].x & colour || i == to) break;
                   else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::King && kingPos - i <= 7) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::Pawn && kingPos - i <= 8 && colour & Piece::White) {
                       inCheck = true;
                       break;
                   }
@@ -690,6 +702,10 @@ public:
                       inCheck = true;
                       break;
                   }
+                  else if (square[i].x & Piece::King && i - kingPos <= 1) {
+                      inCheck = true;
+                      break;
+                  }
               }
           }
           if (!inCheck) {
@@ -697,6 +713,14 @@ public:
                   if (square[i].x == 0 || i == from) continue;
                   else if (square[i].x & colour || i == to) break;
                   else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::King && i - kingPos <= 9) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::Pawn && i - kingPos <= 9 && colour & Piece::Black) {
                       inCheck = true;
                       break;
                   }
@@ -710,6 +734,10 @@ public:
                       inCheck = true;
                       break;
                   }
+                  else if (square[i].x & Piece::King && i - kingPos <= 8) {
+                      inCheck = true;
+                      break;
+                  }
               }
           }
           if (!inCheck) {
@@ -720,23 +748,43 @@ public:
                       inCheck = true;
                       break;
                   }
-              }
-          }
-          if (!inCheck) {
-              for (int i = kingPos - 1; i % 8 != 7; i++) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
+                  else if (square[i].x & Piece::King && i - kingPos <= 7) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::Pawn && i - kingPos <= 8 && colour & Piece::Black) {
                       inCheck = true;
                       break;
                   }
               }
           }
           if (!inCheck) {
-              for (int i = kingPos - 6; i >= 0 && i % 7 != 0; i -= 6) {
+              for (int i = kingPos - 1; i % 8 != 7; i--) {
+                  if (square[i].x == 0 || i == from) continue;
+                  else if (square[i].x & colour || i == to) break;
+                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::King && kingPos - i <= 1) {
+                      inCheck = true;
+                      break;
+                  }
+              }
+          }
+          if (!inCheck) {
+              for (int i = kingPos - 6; i >= 0 && i % 7 != 0; i -= 9) {
                   if (square[i].x == 0 || i == from) continue;
                   else if (square[i].x & colour || i == to) break;
                   else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::King && kingPos - i <= 9) {
+                      inCheck = true;
+                      break;
+                  }
+                  else if (square[i].x & Piece::Pawn && kingPos - i <= 9 && colour & Piece::White) {
                       inCheck = true;
                       break;
                   }
