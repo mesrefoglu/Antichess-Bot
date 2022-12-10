@@ -6,3 +6,5 @@ Dec-9 3:32PM: en-passantable flag may be inefficient, needs to reset all 63 piec
  May be better to just store last registered move on board?
 
 Dec-9 5:25PM: Need to add castling as an option for AI, note its rules
+
+Dec-9 8:48PM: Check checking in steve-test branch, does not check for pawns or other kings yet
