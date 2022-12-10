@@ -7,4 +7,4 @@ Dec-9 3:32PM: en-passantable flag may be inefficient, needs to reset all 63 piec
 
 Dec-9 5:25PM: Need to add castling as an option for AI, note its rules
 
-Dec-9 8:48PM: Check checking in steve-test branch, does not check for ~~pawns, kings,~~ knight yet
+~~Dec-9 8:48PM: Check checking in steve-test branch, does not check for ~~pawns, kings, knight yet~~
