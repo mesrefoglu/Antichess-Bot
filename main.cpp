@@ -723,7 +723,7 @@ public:
               }
           }
           if (!inCheck) {
-              for (int i = kingPos - 1; i % 8 != 7; i++) {
+              for (int i = kingPos - 1; i % 8 != 7; i--) {
                   if (square[i].x == 0 || i == from) continue;
                   else if (square[i].x & colour || i == to) break;
                   else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
@@ -733,7 +733,7 @@ public:
               }
           }
           if (!inCheck) {
-              for (int i = kingPos - 6; i >= 0 && i % 7 != 0; i -= 6) {
+              for (int i = kingPos - 9; i >= 0 && i % 8 != 7; i -= 9) {
                   if (square[i].x == 0 || i == from) continue;
                   else if (square[i].x & colour || i == to) break;
                   else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
