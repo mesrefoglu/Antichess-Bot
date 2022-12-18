@@ -899,7 +899,8 @@ int main(int argc, char *argv[])
   {
     vector<string> moves = board.findPossibleMoves(ai);
     for (int i = 0; i < moves.size(); i++)
-      cout << moves[i] << endl;
+        cout << moves[i] << ", ";
+    cout << endl;
     int choice = std::rand() % moves.size();
     board.makeMove(moves[choice]);
 
