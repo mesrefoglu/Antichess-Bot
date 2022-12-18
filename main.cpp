@@ -303,7 +303,9 @@ public:
               takeFound = true;
               moves.clear();
             }
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
+            // Check for promotion
+            if (i - 7 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7) + 'q');
+            else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));        
           }
           if (i % 8 != 0 && (square[i - 9].x & opposite || square[i - 9].enPassantable))
           {
@@ -312,11 +314,15 @@ public:
               takeFound = true;
               moves.clear();
             }
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
+            // Check for promotion
+            if (i - 9 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9) + 'q');
+            else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
           if (!takeFound && square[i - 8].x == Piece::None)
           {
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+              // Check for promotion
+              if (i - 8 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
+              else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
           if (!takeFound && !square[i].hasMoved && square[i - 16].x == Piece::None)
           {
@@ -332,7 +338,9 @@ public:
               takeFound = true;
               moves.clear();
             }
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+            // Check for promotion
+            if (i + 7 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7) + 'q');
+            else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
           }
           if (i % 8 != 7 && (square[i + 9].x & opposite || square[i + 9].enPassantable))
           {
@@ -341,11 +349,15 @@ public:
               takeFound = true;
               moves.clear();
             }
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+            // Check for promotion
+            if (i + 9 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9) + 'q');
+            else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
           if (square[i + 8].x == Piece::None && !takeFound)
           {
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+            // Check for promotion
+            if (i + 8 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
+            else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
           if (square[i + 16].x == Piece::None && !square[i].hasMoved && !takeFound)
           {
