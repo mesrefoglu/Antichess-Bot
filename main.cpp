@@ -106,7 +106,7 @@ public:
         square[7] = Piece(Piece::None);
         square[5] = Piece(Piece::Rook | Piece::Black);
       }
-      if (to == 58)
+      else if (to == 58)
       {
         square[56] = Piece(Piece::None);
         square[59] = Piece(Piece::Rook | Piece::White);
@@ -143,7 +143,7 @@ public:
   {
     vector<string> moves;
     uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
-    bool takeFound;
+    bool takeFound = false;
     int kingPos; // Used to store own King's Position
     for (int i = 0; i < 64; i++)
     {
@@ -324,7 +324,7 @@ public:
               if (i - 8 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
               else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
-          if (!takeFound && !square[i].hasMoved && square[i - 16].x == Piece::None)
+          if (!takeFound && !square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None)
           {
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 16));
           }
@@ -353,13 +353,13 @@ public:
             if (i + 9 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9) + 'q');
             else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
-          if (square[i + 8].x == Piece::None && !takeFound)
+          if (!takeFound && square[i + 8].x == Piece::None)
           {
             // Check for promotion
             if (i + 8 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
             else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
-          if (square[i + 16].x == Piece::None && !square[i].hasMoved && !takeFound)
+          if (!takeFound && !square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None)
           {
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 16));
           }
@@ -597,35 +597,43 @@ public:
         }
         // Castling Case
         // No take available and King has not moved
-        if (!takeFound && square[i].hasMoved == false) {
-            // Castle to Left Rook
-            if (square[i - 4].hasMoved == false) {
-                // Check for clear path to Rook
-                if (!square[i - 1].x || !square[i - 2].x || !square[i - 3].x) {
-                    // Check if in check
-                    vector<string> boardState;
-                    boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
-                    if (checkCheck(colour, boardState, kingPos).size() == 1) {
-                        moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
-                    }
-                }
+        if (!takeFound && square[i].hasMoved == false)
+        {
+          // Castle to Left Rook
+          if (square[i - 4].hasMoved == false)
+          {
+            // Check for clear path to Rook
+            if (!square[i - 1].x || !square[i - 2].x || !square[i - 3].x)
+            {
+              // Check if in check
+              vector<string> boardState;
+              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+              if (checkCheck(colour, boardState, kingPos).size() == 1)
+              {
+                moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
+              }
             }
-            if (square[i + 3].hasMoved == false) {
-                // Check for clear path to Rook
-                if (!square[i + 1].x || !square[i + 2].x) {
-                    // Check if in check
-                    vector<string> boardState;
-                    boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
-                    if (checkCheck(colour, boardState, kingPos).size() == 1) {
-                        moves.push_back(toAlgebraic(i) + toAlgebraic(i + 2));
-                    }
-                }
+          }
+          if (square[i + 3].hasMoved == false)
+          {
+            // Check for clear path to Rook
+            if (!square[i + 1].x || !square[i + 2].x)
+            {
+              // Check if in check
+              vector<string> boardState;
+              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+              if (checkCheck(colour, boardState, kingPos).size() == 1)
+              {
+                moves.push_back(toAlgebraic(i) + toAlgebraic(i + 2));
+              }
             }
+          }
         }
       }
     }
     std::cout << "Moves before check check" << std::endl;
-    for (auto & m : moves) std::cout << m + ',';
+    for (auto &m : moves)
+      std::cout << m + ',';
     std::cout << std::endl;
     std::cout << "=======" << std::endl;
     return checkCheck(colour, moves, kingPos);
@@ -685,203 +693,275 @@ public:
     }
   }
 
-  private:
-  // "checkCheck" Design Philosophy: 
+private:
+  // "checkCheck" Design Philosophy:
   //    > should be called only by findPossibleMoves
   //    > Pass King's pos, to avoid recalculation
   //    > simulate the move
   //    > Only check necessary squares, in clockwise manner + Knight check
-  // Removes moves that puts own king in check 
-  vector<string> checkCheck(uint8_t colour, vector<string> & moves, int kingPos) {
-      vector<string> validMoves;
-      for (auto & m : moves) {
-          // For each move m, simulate board state, check if King in check
-          bool inCheck = false;
-          uint8_t opposite = (colour == Piece::White ? Piece::Black : Piece::White);
-          // Treat 'to' as impassable
-          //    'from' as empty
-          int from = (m[0] - 'a') + 56 - (m[1] - '1') * 8;
-          int to = (m[2] - 'a') + 56 - (m[3] - '1') * 8;
+  // Removes moves that puts own king in check
+  vector<string> checkCheck(uint8_t colour, vector<string> &moves, int kingPos)
+  {
+    vector<string> validMoves;
+    for (auto &m : moves)
+    {
+      // For each move m, simulate board state, check if King in check
+      bool inCheck = false;
+      uint8_t opposite = (colour == Piece::White ? Piece::Black : Piece::White);
+      // Treat 'to' as impassable
+      //    'from' as empty
+      int from = (m[0] - 'a') + 56 - (m[1] - '1') * 8;
+      int to = (m[2] - 'a') + 56 - (m[3] - '1') * 8;
 
-          int curKingPos = kingPos;
-          //Change curKingPos if King was the piece which moved
-          if (from == kingPos) curKingPos = to;
-          // Clockwise rotation around King
-          for (int i = curKingPos - 8; i >= 0; i -= 8) {
-              // treat 'from' as empty
-              if (square[i].x == 0 || i == from) continue;
-              // treat 'to' as own piece
-              else if (square[i].x & colour || i == to) break;
-              else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
-                  inCheck = true;
-                  break;
-              }
-              else if (square[i].x & Piece::King && curKingPos - i <= 8) {
-                  inCheck = true;
-                  break;
-              }
-              else break;
-          }
-          // Check for Knights
-          if (!inCheck) {
-              if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-              else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x & (opposite | Piece::Knight)) {
-                  inCheck = true;
-                  //continue;
-              }
-          }
-          // NE, E, SE, S, SW, W, NW
-          if (!inCheck) {
-              for (int i = curKingPos - 7; i >= 0 && i%8 != 0; i -= 7) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && curKingPos - i <= 7) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::Pawn && curKingPos - i <= 8 && colour & Piece::White) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) {
-              for (int i = curKingPos + 1; i%8 != 0; i++) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && i - curKingPos <= 1) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) {
-              for (int i = curKingPos + 9; i <= 63 && i % 8 != 0; i += 9) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && i - curKingPos <= 9) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::Pawn && i - curKingPos <= 9 && colour & Piece::Black) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) {
-              for (int i = curKingPos + 8; i <= 63; i += 8) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && i - curKingPos <= 8) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) {
-              for (int i = curKingPos + 7; i <= 63 && i % 8 != 7; i += 7) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && i - curKingPos <= 7) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::Pawn && i - curKingPos <= 8 && colour & Piece::Black) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) {
-              for (int i = curKingPos - 1; i % 8 != 7; i--) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && curKingPos - i <= 1) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) {
-              for (int i = curKingPos - 9; i >= 0 && i % 8 != 7; i -= 9) {
-                  if (square[i].x == 0 || i == from) continue;
-                  else if (square[i].x & colour || i == to) break;
-                  else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::King && curKingPos - i <= 9) {
-                      inCheck = true;
-                      break;
-                  }
-                  else if (square[i].x & Piece::Pawn && curKingPos - i <= 9 && colour & Piece::White) {
-                      inCheck = true;
-                      break;
-                  }
-                  else break;
-              }
-          }
-          if (!inCheck) validMoves.emplace_back(m);
+      int curKingPos = kingPos;
+      // Change curKingPos if King was the piece which moved
+      if (from == kingPos)
+        curKingPos = to;
+      // Clockwise rotation around King
+      for (int i = curKingPos - 8; i >= 0; i -= 8)
+      {
+        // treat 'from' as empty
+        if (square[i].x == 0 || i == from)
+          continue;
+        // treat 'to' as own piece
+        else if (square[i].x & colour || i == to)
+          break;
+        else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+        {
+          inCheck = true;
+          break;
+        }
+        else if (square[i].x & Piece::King && curKingPos - i <= 8)
+        {
+          inCheck = true;
+          break;
+        }
+        else
+          break;
       }
-      return(validMoves);
+      // Check for Knights
+      if (!inCheck)
+      {
+        if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+        else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x & (opposite | Piece::Knight))
+        {
+          inCheck = true;
+          // continue;
+        }
+      }
+      // NE, E, SE, S, SW, W, NW
+      if (!inCheck)
+      {
+        for (int i = curKingPos - 7; i >= 0 && i % 8 != 0; i -= 7)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && curKingPos - i <= 7)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::Pawn && curKingPos - i <= 8 && colour & Piece::White)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+      {
+        for (int i = curKingPos + 1; i % 8 != 0; i++)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && i - curKingPos <= 1)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+      {
+        for (int i = curKingPos + 9; i <= 63 && i % 8 != 0; i += 9)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && i - curKingPos <= 9)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::Pawn && i - curKingPos <= 9 && colour & Piece::Black)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+      {
+        for (int i = curKingPos + 8; i <= 63; i += 8)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && i - curKingPos <= 8)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+      {
+        for (int i = curKingPos + 7; i <= 63 && i % 8 != 7; i += 7)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && i - curKingPos <= 7)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::Pawn && i - curKingPos <= 8 && colour & Piece::Black)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+      {
+        for (int i = curKingPos - 1; i % 8 != 7; i--)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && curKingPos - i <= 1)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+      {
+        for (int i = curKingPos - 9; i >= 0 && i % 8 != 7; i -= 9)
+        {
+          if (square[i].x == 0 || i == from)
+            continue;
+          else if (square[i].x & colour || i == to)
+            break;
+          else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::King && curKingPos - i <= 9)
+          {
+            inCheck = true;
+            break;
+          }
+          else if (square[i].x & Piece::Pawn && curKingPos - i <= 9 && colour & Piece::White)
+          {
+            inCheck = true;
+            break;
+          }
+          else
+            break;
+        }
+      }
+      if (!inCheck)
+        validMoves.emplace_back(m);
+    }
+    return (validMoves);
   }
 };
 
@@ -911,7 +991,7 @@ int main(int argc, char *argv[])
   {
     vector<string> moves = board.findPossibleMoves(ai);
     for (int i = 0; i < moves.size(); i++)
-        cout << moves[i] << ", ";
+      cout << moves[i] << ", ";
     cout << endl;
     int choice = std::rand() % moves.size();
     board.makeMove(moves[choice]);
@@ -936,6 +1016,6 @@ int main(int argc, char *argv[])
     board.makeMove(moves[choice]);
     board.print();
   }
-  
+
   return 0;
 }
