@@ -583,6 +583,33 @@ public:
           else if (!takeFound)
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
         }
+        // Castling Case
+        // No take available and King has not moved
+        if (!takeFound && square[i].hasMoved == false) {
+            // Castle to Left Rook
+            if (square[i - 4].hasMoved == false) {
+                // Check for clear path to Rook
+                if (!square[i - 1].x || !square[i - 2].x || !square[i - 3].x) {
+                    // Check if in check
+                    vector<string> boardState;
+                    boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+                    if (checkCheck(colour, boardState, kingPos).size() == 1) {
+                        moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
+                    }
+                }
+            }
+            if (square[i + 3].hasMoved == false) {
+                // Check for clear path to Rook
+                if (!square[i + 1].x || !square[i + 2].x) {
+                    // Check if in check
+                    vector<string> boardState;
+                    boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+                    if (checkCheck(colour, boardState, kingPos).size() == 1) {
+                        moves.push_back(toAlgebraic(i) + toAlgebraic(i + 2));
+                    }
+                }
+            }
+        }
       }
     }
     std::cout << "Moves before check check" << std::endl;
@@ -873,7 +900,9 @@ int main(int argc, char *argv[])
     vector<string> moves = board.findPossibleMoves(ai);
     for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << endl;
-    board.makeMove(moves[0]);
+    int choice = std::rand() % moves.size();
+    board.makeMove(moves[choice]);
+
     board.print();
   }
   while (move != "end")
@@ -888,9 +917,10 @@ int main(int argc, char *argv[])
     cout << "Possible moves:" << endl;
     for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << ", ";
-    cout << "\nMaking move: " << moves[0] << endl;
+    int choice = std::rand() % moves.size();
+    cout << "\nMaking move: " << moves[choice] << endl;
 
-    board.makeMove(moves[std::rand()%moves.size()]);
+    board.makeMove(moves[choice]);
     board.print();
   }
   
