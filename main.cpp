@@ -689,21 +689,6 @@ public:
     }
   }
 
-  int selectBestTake(vector<string> moves)
-  {
-    for (string move :moves)
-    {
-        int from = getFrom(move);
-        int to = getTo(move);
-
-        if (square[to].x > Piece::None)
-        {
-          
-        }
-    }
-    return -1;
-  }
-
 private:
   // "checkCheck" Design Philosophy:
   //    > should be called only by findPossibleMoves
