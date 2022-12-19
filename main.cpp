@@ -598,9 +598,12 @@ public:
               // Check if in check
               vector<string> boardState;
               boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
-              if (checkCheck(colour, boardState, kingPos).size() == 1)
+              // Check if any of path to King's final spot threatened
+              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i - 1));
+              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i - 2));
+              if (checkCheck(colour, boardState, kingPos).size() == 3)
               {
-                moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
+                  moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
               }
             }
           }
@@ -612,6 +615,9 @@ public:
               // Check if in check
               vector<string> boardState;
               boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+              // Check if any of path to King's final spot threatened
+              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i + 1));
+              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i + 2));
               if (checkCheck(colour, boardState, kingPos).size() == 1)
               {
                 moves.push_back(toAlgebraic(i) + toAlgebraic(i + 2));
