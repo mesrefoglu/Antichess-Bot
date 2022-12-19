@@ -6,6 +6,8 @@
 #include <ctime>
 using namespace std;
 
+#include "helper_functions.h"
+
 // A Piece is represented as 8-bits
 // Leftmost 2-bits represent color
 // Rightmost 6-bits represent type of piece
@@ -70,8 +72,8 @@ public:
   // En Passant, requires storage of last move: e5f6
   void makeMove(string move)
   {
-    int from = (move[0] - 'a') + 56 - (move[1] - '1') * 8;
-    int to = (move[2] - 'a') + 56 - (move[3] - '1') * 8;
+    int from = getFrom(move);
+    int to = getTo(move);
     square[to].x = square[from].x;
     square[to].hasMoved = true;
     square[from] = Piece(Piece::None);
@@ -1010,7 +1012,7 @@ int main(int argc, char *argv[])
     cout << "Possible moves:" << endl;
     for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << ", ";
-    int choice = std::rand() % moves.size();
+    int choice = selectRandom(moves);
     cout << "\nMaking move: " << moves[choice] << endl;
 
     board.makeMove(moves[choice]);
