@@ -742,46 +742,38 @@ private:
       // Check for Knights
       if (!inCheck)
       {
-        if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
-        else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x & (opposite | Piece::Knight))
-        {
-          inCheck = true;
-          // continue;
-        }
+          if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
+          else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x == (opposite | Piece::Knight))
+          {
+              inCheck = true;
+          }
       }
       // NE, E, SE, S, SW, W, NW
       if (!inCheck)
