@@ -14,7 +14,6 @@ class Piece
 public:
   uint8_t x;
   bool hasMoved = false;
-  bool enPassantable = false;
 
   Piece() : x(0){};
   Piece(uint8_t x) : x(x){};
@@ -34,6 +33,7 @@ class Board
 {
 public:
   Piece square[64];
+  int enPassantable = -1;
   // Initialize the board
   Board()
   {
@@ -76,11 +76,8 @@ public:
     square[to].hasMoved = true;
     square[from] = Piece(Piece::None);
     // Reset en passantable flags
-    for (int i = 0; i < 64; i++)
-    {
-      if (i != to) // Don't reset the flag for the square the piece is moving to (in case it's enPassantable)
-        square[i].enPassantable = false;
-    }
+    if (enPassantable != to)
+      enPassantable = -1;
     // Promotion Case:
     if (move.length() == 5)
     {
@@ -121,12 +118,12 @@ public:
     else if ((square[to].x & 63) == Piece::Pawn)
     {
       if (to == from + 16)
-        square[from + 8].enPassantable = true;
+        enPassantable = from + 8;
       else if (to == from - 16)
-        square[from - 8].enPassantable = true;
-      else if ((to == from + 7 || to == from + 9) && square[to].enPassantable)
+        enPassantable = from - 8;
+      else if ((to == from + 7 || to == from + 9) && enPassantable == to)
         square[to - 8] = Piece(Piece::None);
-      else if ((to == from - 7 || to == from - 9) && square[to].enPassantable)
+      else if ((to == from - 7 || to == from - 9) && enPassantable == to)
         square[to + 8] = Piece(Piece::None);
     }
   }
@@ -296,7 +293,7 @@ public:
       {
         if (colour == Piece::White)
         {
-          if (i % 8 != 7 && (square[i - 7].x & opposite || square[i - 7].enPassantable))
+          if (i % 8 != 7 && (square[i - 7].x & opposite || enPassantable == i - 7))
           {
             if (!takeFound)
             {
@@ -304,10 +301,12 @@ public:
               moves.clear();
             }
             // Check for promotion
-            if (i - 7 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7) + 'q');
-            else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));        
+            if (i - 7 < 8)
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7) + 'q');
+            else
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
           }
-          if (i % 8 != 0 && (square[i - 9].x & opposite || square[i - 9].enPassantable))
+          if (i % 8 != 0 && (square[i - 9].x & opposite || enPassantable == i - 9))
           {
             if (!takeFound)
             {
@@ -315,14 +314,18 @@ public:
               moves.clear();
             }
             // Check for promotion
-            if (i - 9 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9) + 'q');
-            else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
+            if (i - 9 < 8)
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9) + 'q');
+            else
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
           if (!takeFound && square[i - 8].x == Piece::None)
           {
-              // Check for promotion
-              if (i - 8 < 8) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
-              else moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+            // Check for promotion
+            if (i - 8 < 8)
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
+            else
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
           if (!takeFound && !square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None)
           {
@@ -331,7 +334,7 @@ public:
         }
         else
         {
-          if (i % 8 != 0 && (square[i + 7].x & opposite || square[i + 7].enPassantable))
+          if (i % 8 != 0 && (square[i + 7].x & opposite || enPassantable == i + 7))
           {
             if (!takeFound)
             {
@@ -339,10 +342,12 @@ public:
               moves.clear();
             }
             // Check for promotion
-            if (i + 7 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7) + 'q');
-            else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+            if (i + 7 >= 56)
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7) + 'q');
+            else
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
           }
-          if (i % 8 != 7 && (square[i + 9].x & opposite || square[i + 9].enPassantable))
+          if (i % 8 != 7 && (square[i + 9].x & opposite || enPassantable == i + 9))
           {
             if (!takeFound)
             {
@@ -350,14 +355,18 @@ public:
               moves.clear();
             }
             // Check for promotion
-            if (i + 9 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9) + 'q');
-            else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+            if (i + 9 >= 56)
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9) + 'q');
+            else
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
           if (!takeFound && square[i + 8].x == Piece::None)
           {
             // Check for promotion
-            if (i + 8 >= 56) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
-            else moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+            if (i + 8 >= 56)
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
+            else
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
           if (!takeFound && !square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None)
           {
@@ -742,38 +751,38 @@ private:
       // Check for Knights
       if (!inCheck)
       {
-          if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
-          else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x == (opposite | Piece::Knight))
-          {
-              inCheck = true;
-          }
+        if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
+        else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x == (opposite | Piece::Knight))
+        {
+          inCheck = true;
+        }
       }
       // NE, E, SE, S, SW, W, NW
       if (!inCheck)
