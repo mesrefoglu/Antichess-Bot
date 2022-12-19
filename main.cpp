@@ -7,29 +7,8 @@
 using namespace std;
 
 #include "helper_functions.h"
+#include "piece.h"
 
-// A Piece is represented as 8-bits
-// Leftmost 2-bits represent color
-// Rightmost 6-bits represent type of piece
-class Piece
-{
-public:
-  uint8_t x;
-  bool hasMoved = false;
-
-  Piece() : x(0){};
-  Piece(uint8_t x) : x(x){};
-
-  const static uint8_t None = 0;
-  const static uint8_t Pawn = 1;
-  const static uint8_t Bishop = 2;
-  const static uint8_t Knight = 4;
-  const static uint8_t Rook = 8;
-  const static uint8_t Queen = 16;
-  const static uint8_t King = 32;
-  const static uint8_t White = 64;
-  const static uint8_t Black = 128;
-};
 
 class Board
 {
@@ -704,6 +683,21 @@ public:
     }
   }
 
+  int selectBestTake(vector<string> moves)
+  {
+    for (string move :moves)
+    {
+        int from = getFrom(move);
+        int to = getTo(move);
+
+        if (square[to].x > Piece::None)
+        {
+          
+        }
+    }
+    return -1;
+  }
+
 private:
   // "checkCheck" Design Philosophy:
   //    > should be called only by findPossibleMoves
@@ -1013,10 +1007,8 @@ int main(int argc, char *argv[])
     cout << "Possible moves:" << endl;
     for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << ", ";
-    int choice = selectRandom(moves);
-    cout << "\nMaking move: " << moves[choice] << endl;
 
-    board.makeMove(moves[choice]);
+    board.makeMove(selectBestTake(moves, board.square));
     board.print();
   }
 

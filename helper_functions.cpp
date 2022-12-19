@@ -8,19 +8,35 @@
 
 using namespace std;
 
+#include "piece.h"
+
 int selectRandom(vector<string> moves)
 {
     return std::rand() % moves.size();
 }
 
-int selectBestTake(vector<string> moves)
+string selectBestTake(vector<string> moves, const Piece* square)
 {
-    for (string move :moves)
-    {
-        int from = getFrom(move);
-        int to = getTo(move);
+    string best_take = moves[0];
+    if (square[1].x > Piece::None)
+    {   
+        int max = 0;
+        for (string move :moves)
+        {
+            int to = getTo(move);
+            if (square[to].x > max)
+            {
+                max = square[to].x;
+                best_take = move;
+            }
+        }
+        cout << "\nMaking move: " << best_take << endl;
+        return best_take;
     }
-    return -1;
+    else
+    {
+        return moves[selectRandom(moves)];
+    }
 }
 
 int getFrom(string move)
