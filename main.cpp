@@ -201,7 +201,6 @@ public:
 						  takeFound = true;
 						  if (!inCheck) moves.clear();
 					  }
-					  cout << "Bish or Queen takes" << endl;
 					  moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
 					  break;
 				  }
