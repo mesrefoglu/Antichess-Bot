@@ -42,8 +42,8 @@ private:
   //    > simulate the move
   //    > Only check necessary squares, in clockwise manner + Knight check
   // Removes moves that puts own king in check
-  vector<string> checkCheck(uint8_t colour, vector<string> &moves, int kingPos);
-  int Board::kingFind(uint8_t colour);
+  bool checkCheck(uint8_t colour,string move, int kingPos);
+  int kingFind(uint8_t colour);
 };
 
 #endif

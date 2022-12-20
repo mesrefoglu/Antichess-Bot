@@ -719,7 +719,6 @@ Board::Board()
     }
   }
 
-private:
   // "checkCheck" Design Philosophy:
   //    > should be called only by findPossibleMoves
   //    > Pass King's pos, to avoid recalculation
@@ -944,4 +943,4 @@ private:
       }
       return(kingPos);
   }
-}
+
