@@ -11,12 +11,6 @@ using namespace std;
 #include "helper_functions.h"
 
 Board::Board()
-
-public:
-  Piece square[64];
-  int enPassantable = -1;
-  // Initialize the board
-  Board()
   {
     // Set up the starting position
     square[0] = Piece(Piece::Rook | Piece::Black);
