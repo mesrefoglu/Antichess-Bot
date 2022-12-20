@@ -9,7 +9,6 @@ using namespace std;
 #include "helper_functions.h"
 #include "piece.h"
 
-
 class Board
 {
 public:
@@ -589,39 +588,32 @@ public:
         // No take available and King has not moved
         if (!takeFound && square[i].hasMoved == false)
         {
-          // Castle to Left Rook
-          if (square[i - 4].hasMoved == false)
+          // Queenside Castle
+          if (square[i - 4].hasMoved == false && square[i - 1].x == Piece::None && square[i - 2].x == Piece::None && square[i - 3].x == Piece::None)
           {
-            // Check for clear path to Rook
-            if (!square[i - 1].x || !square[i - 2].x || !square[i - 3].x)
+            // Check if in check
+            vector<string> boardState;
+            boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+            // Check if any of path to King's final spot threatened
+            boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i - 1));
+            boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i - 2));
+            if (checkCheck(colour, boardState, kingPos).size() == 3)
             {
-              // Check if in check
-              vector<string> boardState;
-              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
-              // Check if any of path to King's final spot threatened
-              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i - 1));
-              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i - 2));
-              if (checkCheck(colour, boardState, kingPos).size() == 3)
-              {
-                  moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
-              }
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 2));
             }
           }
-          if (square[i + 3].hasMoved == false)
+          // Kingside Castle
+          if (square[i + 3].hasMoved == false && square[i + 1].x == Piece::None && square[i + 2].x == Piece::None)
           {
-            // Check for clear path to Rook
-            if (!square[i + 1].x || !square[i + 2].x)
+            // Check if in check
+            vector<string> boardState;
+            boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
+            // Check if any of path to King's final spot threatened
+            boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i + 1));
+            boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i + 2));
+            if (checkCheck(colour, boardState, kingPos).size() == 1)
             {
-              // Check if in check
-              vector<string> boardState;
-              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i));
-              // Check if any of path to King's final spot threatened
-              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i + 1));
-              boardState.emplace_back(toAlgebraic(i) + toAlgebraic(i + 2));
-              if (checkCheck(colour, boardState, kingPos).size() == 1)
-              {
-                moves.push_back(toAlgebraic(i) + toAlgebraic(i + 2));
-              }
+              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 2));
             }
           }
         }
