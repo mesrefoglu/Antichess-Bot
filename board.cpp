@@ -43,7 +43,7 @@ Board::Board()
   // Pawn promotion: e7e8q
   // Castling as the King's two-square move: e1g1
   // En Passant, requires storage of last move: e5f6
-  void makeMove(string move)
+  void Board::makeMove(string move)
   {
     int from = getFrom(move);
     int to = getTo(move);
@@ -103,7 +103,7 @@ Board::Board()
     }
   }
 
-  string toAlgebraic(int square)
+  string Board::toAlgebraic(int square)
   {
     string result;
     result += (char)('a' + square % 8);
@@ -111,7 +111,7 @@ Board::Board()
     return result;
   }
 
-  vector<string> findPossibleMoves(uint8_t colour)
+  vector<string> Board::findPossibleMoves(uint8_t colour)
   {
 	  vector<string> moves;
 	  uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
@@ -666,7 +666,7 @@ Board::Board()
   }
 
   // Print the board
-  void print()
+  void Board::print()
   {
     for (int i = 0; i < 64; i++)
     {
@@ -726,7 +726,7 @@ private:
   //    > simulate the move
   //    > Only check necessary squares, in clockwise manner + Knight check
   // For each move, simulate board state, check if King in check
-  bool checkCheck(uint8_t colour, string move, int kingPos)
+  bool Board::checkCheck(uint8_t colour, string move, int kingPos)
   {
 	  uint8_t opposite = (colour == Piece::White ? Piece::Black : Piece::White);
 	  // Treat 'to' as impassable
@@ -934,7 +934,7 @@ private:
       return(false);
   }
 
-  int kingFind(uint8_t colour) {
+  int Board::kingFind(uint8_t colour) {
       int kingPos = -1;
       for (int i = 0; i < 63; i++) {
           if (square[i].x == colour + Piece::King) {
