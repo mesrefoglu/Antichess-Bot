@@ -614,11 +614,11 @@ vector<string> Board::findPossibleMoves(uint8_t colour)
       }
     }
   }
-  std::cout << "Moves before check check" << std::endl;
+  cout << "Moves before check check:" << endl;
   for (auto &m : moves)
-    std::cout << m + ',';
-  std::cout << std::endl;
-  std::cout << "=======" << std::endl;
+    cout << m + ", ";
+  cout << endl;
+  cout << "Moves after check check:" << endl;
   return checkCheck(colour, moves, kingPos);
 }
 
