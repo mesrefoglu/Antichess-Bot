@@ -20,14 +20,25 @@ string selectBestTake(vector<string> moves, const Piece* square)
     string best_take = moves[0];
     if (square[1].x > Piece::None)
     {   
-        int max = 0;
+        int max = Piece::None;
+        int min = Piece::King;
         for (string move :moves)
         {
             int to = getTo(move);
+            int from = getFrom(move);
             if (square[to].x > max)
             {
                 max = square[to].x;
                 best_take = move;
+                min = square[from].x;
+            }
+            else if (square[to].x == max && max > Piece::None)
+            {
+                if (min > square[from].x)
+                {
+                    min = square[from].x;
+                    best_take = move;
+                }
             }
         }
         cout << "\nMaking move: " << best_take << endl;
