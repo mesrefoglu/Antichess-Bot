@@ -11,7 +11,7 @@ using namespace std;
 #include "helper_functions.h"
 
 Board::Board()
-  {
+{
     // Set up the starting position
     square[0] = Piece(Piece::Rook | Piece::Black);
     square[1] = Piece(Piece::Knight | Piece::Black);
@@ -35,7 +35,13 @@ Board::Board()
     square[61] = Piece(Piece::Bishop | Piece::White);
     square[62] = Piece(Piece::Knight | Piece::White);
     square[63] = Piece(Piece::Rook | Piece::White);
-  }
+}
+
+void Board::createBoard(Board temp)
+{
+  for (int i = 0; i < 64; i++)
+    square[i] = temp.square[i];
+}
 
   // Makes move given input, no move validation
   // Coordinate algebraic notation, examples:
@@ -43,8 +49,8 @@ Board::Board()
   // Pawn promotion: e7e8q
   // Castling as the King's two-square move: e1g1
   // En Passant, requires storage of last move: e5f6
-  void Board::makeMove(string move)
-  {
+void Board::makeMove(string move)
+{
     int from = getFrom(move);
     int to = getTo(move);
     square[to].x = square[from].x;
@@ -101,18 +107,18 @@ Board::Board()
       else if ((to == from - 7 || to == from - 9) && enPassantable == to)
         square[to + 8] = Piece(Piece::None);
     }
-  }
+}
 
-  string Board::toAlgebraic(int square)
-  {
+string Board::toAlgebraic(int square)
+{
     string result;
     result += (char)('a' + square % 8);
     result += (char)('1' + 7 - square / 8);
     return result;
-  }
+}
 
-  vector<string> Board::findPossibleMoves(uint8_t colour)
-  {
+vector<string> Board::findPossibleMoves(uint8_t colour)
+{
 	  vector<string> moves;
 	  uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
 	  bool takeFound = false;
@@ -663,11 +669,11 @@ Board::Board()
 	  }
 
 	  return(checkedMoves);
-  }
+}
 
   // Print the board
-  void Board::print()
-  {
+void Board::print()
+{
     for (int i = 0; i < 64; i++)
     {
       string piece;
@@ -717,7 +723,7 @@ Board::Board()
       if ((i + 1) % 8 == 0)
         cout << endl;
     }
-  }
+}
 
   // "checkCheck" Design Philosophy:
   //    > should be called only by findPossibleMoves
@@ -725,8 +731,8 @@ Board::Board()
   //    > simulate the move
   //    > Only check necessary squares, in clockwise manner + Knight check
   // For each move, simulate board state, check if King in check
-  bool Board::checkCheck(uint8_t colour, string move, int kingPos)
-  {
+bool Board::checkCheck(uint8_t colour, string move, int kingPos)
+{
 	  uint8_t opposite = (colour == Piece::White ? Piece::Black : Piece::White);
 	  // Treat 'to' as impassable
 	  //    'from' as empty
@@ -931,9 +937,10 @@ Board::Board()
 	  }
 
       return(false);
-  }
+}
 
-  int Board::kingFind(uint8_t colour) {
+int Board::kingFind(uint8_t colour) 
+{
       int kingPos = -1;
       for (int i = 0; i < 63; i++) {
           if (square[i].x == colour + Piece::King) {
@@ -942,5 +949,54 @@ Board::Board()
           }
       }
       return(kingPos);
+}
+
+// Evaluate the board (+ means white is winning, - means black is winning)
+int Board::evaluate()
+{
+  int score = 0;
+  for (int i = 0; i < 64; i++)
+  {
+    switch (square[i].x)
+    {
+    case Piece::Pawn | Piece::White:
+      score += 1;
+      break;
+    case Piece::Pawn | Piece::Black:
+      score -= 1;
+      break;
+    case Piece::Bishop | Piece::White:
+      score += 3;
+      break;
+    case Piece::Bishop | Piece::Black:
+      score -= 3;
+      break;
+    case Piece::Knight | Piece::White:
+      score += 3;
+      break;
+    case Piece::Knight | Piece::Black:
+      score -= 3;
+      break;
+    case Piece::Rook | Piece::White:
+      score += 5;
+      break;
+    case Piece::Rook | Piece::Black:
+      score -= 5;
+      break;
+    case Piece::Queen | Piece::White:
+      score += 9;
+      break;
+    case Piece::Queen | Piece::Black:
+      score -= 9;
+      break;
+    case Piece::King | Piece::White:
+      score += 1000;
+      break;
+    case Piece::King | Piece::Black:
+      score -= 1000;
+      break;
+    }
   }
+  return score;
+}
 
