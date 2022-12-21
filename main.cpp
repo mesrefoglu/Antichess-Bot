@@ -160,7 +160,9 @@ public:
   // Returns a vector of all possible moves for a given colour
   vector<string> findPossibleMoves(uint8_t colour)
   {
-    vector<string> moves;
+    vector<string> takeMoves;
+    vector<string> nonTakeMoves;
+    bool checked = inCheck(colour);
     uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
     bool takeFound = false;
     for (int i = 0; i < 64; i++)
@@ -179,7 +181,8 @@ public:
             if (!takeFound)
             {
               takeFound = true;
-              moves.clear();
+              if (!checked)
+                nonTakeMoves.clear();
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
             break;
