@@ -23,7 +23,6 @@ public:
   ~TreeNode();
 
   tuple<string, int> findBestMove(int depth);
-  
 };
 
 #endif

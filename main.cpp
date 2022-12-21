@@ -4,6 +4,7 @@
 #include <bitset>
 #include <cstdlib>
 #include <ctime>
+#include <tuple>
 using namespace std;
 
 #include "helper_functions.h"
@@ -52,14 +53,14 @@ int main(int argc, char *argv[])
       break;
     board.makeMove(move);
     board.print();
-    //vector<string> moves = board.findPossibleMoves(ai);
-    //cout << "Possible moves:" << endl;
-    //for (int i = 0; i < moves.size(); i++)
-    //  cout << moves[i] << ", ";
+    // vector<string> moves = board.findPossibleMoves(ai);
+    // cout << "Possible moves:" << endl;
+    // for (int i = 0; i < moves.size(); i++)
+    //   cout << moves[i] << ", ";
     int depth = 2;
-    tuple <string, int> suggestedmove;
+    tuple<string, int> suggestedmove;
     TreeNode currentPosition = TreeNode(Piece::White, board);
-		suggestedmove = currentPosition.findBestMove(depth);
+    suggestedmove = currentPosition.findBestMove(depth);
     board.makeMove(get<0>(suggestedmove));
     board.print();
     cout << endl;

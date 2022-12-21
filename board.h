@@ -37,7 +37,7 @@ public:
 
   // Evaluate the board (+ means white is winning, - means black is winning)
   int evaluate();
-  
+
 private:
   // "checkCheck" Design Philosophy:
   //    > should be called only by findPossibleMoves
@@ -45,7 +45,7 @@ private:
   //    > simulate the move
   //    > Only check necessary squares, in clockwise manner + Knight check
   // Removes moves that puts own king in check
-  bool checkCheck(uint8_t colour,string move, int kingPos);
+  bool checkCheck(uint8_t colour, string move, int kingPos);
   int kingFind(uint8_t colour);
 };
 

@@ -13,7 +13,7 @@ using namespace std;
 #define HELPER_FUNCTIONS_H
 
 int selectRandom(vector<string> moves);
-string selectBestTake(vector<string> moves, const Piece* square);
+string selectBestTake(vector<string> moves, const Piece *square);
 int getFrom(string move);
 int getTo(string move);
 

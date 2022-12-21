@@ -15,14 +15,14 @@ int selectRandom(vector<string> moves)
     return std::rand() % moves.size();
 }
 
-string selectBestTake(vector<string> moves, const Piece* square)
+string selectBestTake(vector<string> moves, const Piece *square)
 {
     string best_take = moves[0];
     if (square[1].x > Piece::None)
-    {   
+    {
         int max = Piece::None;
         int min = Piece::King;
-        for (string move :moves)
+        for (string move : moves)
         {
             int to = getTo(move);
             int from = getFrom(move);
