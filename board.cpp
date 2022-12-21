@@ -950,6 +950,7 @@ int Board::kingFind(uint8_t colour)
       }
       return(kingPos);
 }
+<<<<<<< HEAD
 
 // Evaluate the board (+ means white is winning, - means black is winning)
 int Board::evaluate()
@@ -1000,3 +1001,5 @@ int Board::evaluate()
   return score;
 }
 
+=======
+>>>>>>> 38e2ebd (rebase)
