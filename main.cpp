@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     //   cout << moves[i] << ", ";
     int depth = 2;
     tuple<string, int> suggestedmove;
-    TreeNode currentPosition = TreeNode(Piece::White, board);
+    TreeNode currentPosition = TreeNode(ai, board);
     suggestedmove = currentPosition.findBestMove(depth);
     board.makeMove(get<0>(suggestedmove));
     board.print();

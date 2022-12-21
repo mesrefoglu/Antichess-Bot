@@ -20,6 +20,8 @@ public:
   Piece() : x(0){};
   Piece(uint8_t x) : x(x){};
 
+  ~Piece() {}
+
   const static uint8_t None = 0;
   const static uint8_t Pawn = 1;
   const static uint8_t Bishop = 2;

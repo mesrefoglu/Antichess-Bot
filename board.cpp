@@ -37,6 +37,12 @@ Board::Board()
 	square[63] = Piece(Piece::Rook | Piece::White);
 }
 
+Board::~Board()
+{
+	for (int i = 0; i < 64; i++)
+		square[i].~Piece();
+}
+
 void Board::createBoard(Board temp)
 {
 	for (int i = 0; i < 64; i++)

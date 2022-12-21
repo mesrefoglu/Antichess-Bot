@@ -17,6 +17,7 @@ public:
   int enPassantable = -1;
   // Initialize the board
   Board();
+  ~Board();
 
   void createBoard(Board temp);
 

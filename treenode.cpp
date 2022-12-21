@@ -64,11 +64,11 @@ tuple<string, int> TreeNode::findBestMove(int depth)
         best_score = 10000;
     }
 
+    Board newBoard;
     for (int i = 0; i < int(possibleMoves.size()); i++)
     {
         string move = possibleMoves[i];
         cout << "checking move from possible " << move << " depth of " << depth << endl;
-        Board newBoard;
         newBoard.createBoard(tempBoard);
         newBoard.makeMove(move);
         TreeNode cur_child = TreeNode(next_to_move, newBoard);
