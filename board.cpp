@@ -37,6 +37,12 @@ Board::Board()
   square[63] = Piece(Piece::Rook | Piece::White);
 }
 
+void Board::createBoard(Board temp)
+{
+  for (int i = 0; i < 64; i++)
+    square[i] = temp.square[i];
+}
+
 // Makes move given input, no move validation
 // Coordinate algebraic notation, examples:
 // Normal move: e2e4
@@ -935,4 +941,53 @@ vector<string> Board::checkCheck(uint8_t colour, vector<string> &moves, int king
       validMoves.emplace_back(m);
   }
   return (validMoves);
+}
+
+// Evaluate the board (+ means white is winning, - means black is winning)
+int Board::evaluate()
+{
+  int score = 0;
+  for (int i = 0; i < 64; i++)
+  {
+    switch (square[i].x)
+    {
+    case Piece::Pawn | Piece::White:
+      score += 1;
+      break;
+    case Piece::Pawn | Piece::Black:
+      score -= 1;
+      break;
+    case Piece::Bishop | Piece::White:
+      score += 3;
+      break;
+    case Piece::Bishop | Piece::Black:
+      score -= 3;
+      break;
+    case Piece::Knight | Piece::White:
+      score += 3;
+      break;
+    case Piece::Knight | Piece::Black:
+      score -= 3;
+      break;
+    case Piece::Rook | Piece::White:
+      score += 5;
+      break;
+    case Piece::Rook | Piece::Black:
+      score -= 5;
+      break;
+    case Piece::Queen | Piece::White:
+      score += 9;
+      break;
+    case Piece::Queen | Piece::Black:
+      score -= 9;
+      break;
+    case Piece::King | Piece::White:
+      score += 1000;
+      break;
+    case Piece::King | Piece::Black:
+      score -= 1000;
+      break;
+    }
+  }
+  return score;
 }

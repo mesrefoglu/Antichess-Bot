@@ -9,6 +9,7 @@ using namespace std;
 #include "helper_functions.h"
 #include "piece.h"
 #include "board.h"
+#include "treenode.h"
 
 int main(int argc, char *argv[])
 {
@@ -51,12 +52,15 @@ int main(int argc, char *argv[])
       break;
     board.makeMove(move);
     board.print();
-    vector<string> moves = board.findPossibleMoves(ai);
-    cout << "Possible moves:" << endl;
-    for (int i = 0; i < moves.size(); i++)
-      cout << moves[i] << ", ";
-    
-    board.makeMove(selectBestTake(moves, board.square));
+    //vector<string> moves = board.findPossibleMoves(ai);
+    //cout << "Possible moves:" << endl;
+    //for (int i = 0; i < moves.size(); i++)
+    //  cout << moves[i] << ", ";
+    int depth = 3;
+    tuple <string, int> move;
+    TreeNode currentPosition = TreeNode(Piece::White, board);
+		move = currentPosition.findBestMove(depth);
+    board.makeMove(get<0>(move));
     board.print();
   }
 

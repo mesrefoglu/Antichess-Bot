@@ -20,6 +20,8 @@ public:
   // Initialize the board
   Board();
 
+  void createBoard(Board temp);
+
   // Makes move given input, no move validation
   // Coordinate algebraic notation, examples:
   // Normal move: e2e4
@@ -34,6 +36,9 @@ public:
 
   // Print the board
   void print();
+
+  // Evaluate the board (+ means white is winning, - means black is winning)
+  int evaluate();
   
 private:
   // "checkCheck" Design Philosophy:
