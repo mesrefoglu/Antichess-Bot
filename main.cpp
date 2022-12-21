@@ -56,11 +56,11 @@ int main(int argc, char *argv[])
     //cout << "Possible moves:" << endl;
     //for (int i = 0; i < moves.size(); i++)
     //  cout << moves[i] << ", ";
-    int depth = 3;
-    tuple <string, int> move_;
+    int depth = 2;
+    tuple <string, int> suggestedmove;
     TreeNode currentPosition = TreeNode(Piece::White, board);
-		move_ = currentPosition.findBestMove(depth);
-    board.makeMove(get<0>(move_));
+		suggestedmove = currentPosition.findBestMove(depth);
+    board.makeMove(get<0>(suggestedmove));
     board.print();
     cout << endl;
   }
