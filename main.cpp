@@ -3,6 +3,10 @@
 #include <vector>
 #include <bitset>
 using namespace std;
+#ifndef DEPTH
+#define DEPTH 5
+#endif
+
 
 class Piece
 {
@@ -710,7 +714,7 @@ public:
 
   string bestMove(uint8_t colour)
   {
-    int depth = 5;
+    int depth = DEPTH;
     int bestScore = colour == Piece::White ? -100000 : 100000;
     string bestMove = "";
     vector<string> moves = findPossibleMoves(colour);
@@ -824,6 +828,7 @@ void playerMove(Board &board)
   string move;
   cout << "Make a move..." << endl;
   cin >> move;
+  if (move == "end") exit(0);
   board.makeMove(move);
   board.print();
 }
