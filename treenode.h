@@ -8,8 +8,6 @@
 #include "piece.h"
 #include "board.h"
 
-using namespace std;
-
 #ifndef TREENODE_H
 #define TREENODE_H
 
@@ -22,6 +20,7 @@ public:
 
   // Initialize the node
   TreeNode(int to_move, Board current_board);
+  ~TreeNode();
 
   tuple<string, int> findBestMove(int depth);
   

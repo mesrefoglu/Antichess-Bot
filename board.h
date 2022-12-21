@@ -7,8 +7,6 @@
 
 #include "piece.h"
 
-using namespace std;
-
 #ifndef BOARD_H
 #define BOARD_H
 

@@ -12,9 +12,14 @@ using namespace std;
 #include "treenode.h"
 
 TreeNode::TreeNode(int to_move, Board current_board){
-	tempBoard = current_board;
+	tempBoard.createBoard(current_board);
     color_to_move = to_move;
 	possibleMoves = current_board.findPossibleMoves(color_to_move);
+}
+
+TreeNode::~TreeNode()
+{
+    possibleMoves.clear();
 }
 
 tuple<string, int> TreeNode::findBestMove(int depth) {
@@ -26,11 +31,10 @@ tuple<string, int> TreeNode::findBestMove(int depth) {
         best_move = selectBestTake(possibleMoves, tempBoard.square);
         tempBoard.makeMove(best_move);
         score = tempBoard.evaluate();
-        tempBoard.print();
-        cout << endl;
 		// use whatever evaluation you want to determine the best move
 		//remember that you always want to find the best move of whichever color
 		// is currently to play
+        cout << "Eval move  " << best_move << endl;
         return make_tuple(best_move, score);
     }
 
@@ -57,10 +61,10 @@ tuple<string, int> TreeNode::findBestMove(int depth) {
         best_score = 10000;
     }
 
-	for (int i = 0; i < possibleMoves.size(); i++)
+	for (int i = 0; i < int(possibleMoves.size()); i++)
     {
         string move = possibleMoves[i];
-        cout << move << endl;
+        cout << "checking move from possible " << move << " depth of " << depth << endl;
         Board newBoard;
         newBoard.createBoard(tempBoard);
         newBoard.makeMove(move);

@@ -5,8 +5,6 @@
 #include <cstdlib>
 #include <ctime>
 
-using namespace std;
-
 #ifndef PIECE_H
 #define PIECE_H
 

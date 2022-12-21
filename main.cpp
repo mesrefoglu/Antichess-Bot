@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
   if (argv1 == "white") // ai is white, player is black
   {
     vector<string> moves = board.findPossibleMoves(ai);
-    for (int i = 0; i < moves.size(); i++)
+    /*for (int i = 0; i < moves.size(); i++)
       cout << moves[i] << ", ";
-    cout << endl;
+    cout << endl;*/
     int choice = std::rand() % moves.size();
     board.makeMove(moves[choice]);
 
@@ -56,12 +56,13 @@ int main(int argc, char *argv[])
     //cout << "Possible moves:" << endl;
     //for (int i = 0; i < moves.size(); i++)
     //  cout << moves[i] << ", ";
-    int depth = 2;
-    tuple <string, int> move;
+    int depth = 3;
+    tuple <string, int> move_;
     TreeNode currentPosition = TreeNode(Piece::White, board);
-		move = currentPosition.findBestMove(depth);
-    board.makeMove(get<0>(move));
+		move_ = currentPosition.findBestMove(depth);
+    board.makeMove(get<0>(move_));
     board.print();
+    cout << endl;
   }
 
   return 0;

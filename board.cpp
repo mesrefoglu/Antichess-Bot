@@ -645,7 +645,7 @@ vector<string> Board::findPossibleMoves(uint8_t colour)
 		  }
 	  }
 
-	  std::cout << "Moves before check check" << std::endl;
+	  /* std::cout << "Moves before check check" << std::endl;
 	  for (auto& m : moves)
 		  std::cout << m + ',';
 	  std::cout << std::endl;
@@ -653,7 +653,7 @@ vector<string> Board::findPossibleMoves(uint8_t colour)
 	  for (auto& m : secondary)
 		  std::cout << m + ',';
 	  std::cout << std::endl;
-	  std::cout << "=======" << std::endl;
+	  std::cout << "=======" << std::endl; */
 
 	  // Check Move validation
 	  vector<string> checkedMoves;
