@@ -150,6 +150,8 @@ public:
       checked = inCheck(Piece::White);
     else
       checked = false;
+
+    square[to].hasMoved = true;
   }
 
   // Returns a string representation of a square
