@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     //cout << "Possible moves:" << endl;
     //for (int i = 0; i < moves.size(); i++)
     //  cout << moves[i] << ", ";
-    int depth = 3;
+    int depth = 2;
     tuple <string, int> move;
     TreeNode currentPosition = TreeNode(Piece::White, board);
 		move = currentPosition.findBestMove(depth);
