@@ -919,13 +919,7 @@ void aiMove(Board &board, uint8_t ai, int depth)
   vector<string> moves = board.findPossibleMoves(ai);
   int kingPos = board.kingFind(ai);
   if (moves.size() == 0)
-  {
-    if (board.inCheck(ai, board.toAlgebraic(kingPos) + board.toAlgebraic(kingPos), kingPos))
-      cout << (ai == Piece::White ? "White" : "Black") << " got checkmated." << endl;
-    else
-      cout << "Stalemate." << endl;
     return;
-  }
   string bestMove = board.bestMove(ai, depth);
   if (bestMove == "")
     bestMove = moves[0];
