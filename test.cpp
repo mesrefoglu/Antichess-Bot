@@ -4,7 +4,7 @@
 #include <bitset>
 using namespace std;
 #ifndef DEPTH
-#define DEPTH 7
+#define DEPTH 1
 #endif
 
 class Piece
@@ -39,17 +39,28 @@ public:
   // Initialize the board
   Board()
   {
-          // Set up the starting position
-          square[3] = Piece(Piece::Queen | Piece::Black);
-      //square[4] = Piece(Piece::Queen | Piece::Black);
-      square[5] = Piece(Piece::King | Piece::Black);
-
-      for (int i = 16; i < 48; i++) {
-          if (i != 3 && i != 5 && i != 60 && i != 63) square[i] = Piece(Piece::None);
-      }
-
-      square[63] = Piece(Piece::Rook | Piece::White);
-      square[60] = Piece(Piece::King | Piece::White);
+    square[0] = Piece(Piece::Rook | Piece::Black);
+    square[1] = Piece(Piece::Knight | Piece::Black);
+    square[2] = Piece(Piece::Bishop | Piece::Black);
+    square[3] = Piece(Piece::Queen | Piece::Black);
+    square[4] = Piece(Piece::King | Piece::Black);
+    square[5] = Piece(Piece::Bishop | Piece::Black);
+    square[6] = Piece(Piece::Knight | Piece::Black);
+    square[7] = Piece(Piece::Rook | Piece::Black);
+    for (int i = 8; i < 16; i++)
+      square[i] = Piece(Piece::Pawn | Piece::Black);
+    for (int i = 16; i < 48; i++)
+      square[i] = Piece(Piece::None);
+    for (int i = 48; i < 56; i++)
+      square[i] = Piece(Piece::Pawn | Piece::White);
+    square[56] = Piece(Piece::Rook | Piece::White);
+    square[57] = Piece(Piece::Knight | Piece::White);
+    square[58] = Piece(Piece::Bishop | Piece::White);
+    square[59] = Piece(Piece::Queen | Piece::White);
+    square[60] = Piece(Piece::King | Piece::White);
+    square[61] = Piece(Piece::Bishop | Piece::White);
+    square[62] = Piece(Piece::Knight | Piece::White);
+    square[63] = Piece(Piece::Rook | Piece::White);
   }
 
   // Makes move given input, no move validation
@@ -695,37 +706,37 @@ public:
         if (!takeFound && !checked)
         {
             // Queenside Black Castle
-            if (castleableBQ && square[3].x == Piece::None && square[2].x == Piece::None && square[1].x == Piece::None) {
+            if (castleableBQ && (square[3].x == Piece::None) && (square[2].x == Piece::None) && (square[1].x == Piece::None)) {
                 // Check if any of path to King's final spot threatened
                 // Final spot itself checked in final checkCheck
-                if (inCheck(colour, toAlgebraic(4) + toAlgebraic(3), kingPos))
+                if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(3), kingPos))
                 {
                     moves.push_back(toAlgebraic(4) + toAlgebraic(2));
                 }
             }
             // Kingside Black Castle 
-            if (castleableBK && square[5].x == Piece::None && square[6].x == Piece::None) {
+            if (castleableBK && (square[5].x == Piece::None) && (square[6].x == Piece::None)) {
                 // Check if any of path to King's final spot threatened
                 // Final spot itself checked in final checkCheck
-                if (inCheck(colour, toAlgebraic(4) + toAlgebraic(5), kingPos))
+                if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(5), kingPos))
                 {
                     moves.push_back(toAlgebraic(4) + toAlgebraic(6));
                 }
             }
             // Queenside White Castle
-            if (castleableWQ && square[59].x == Piece::None && square[58].x == Piece::None && square[57].x == Piece::None) {
+            if (castleableWQ && (square[59].x == Piece::None) && (square[58].x == Piece::None) && (square[57].x == Piece::None)) {
                 // Check if any of path to King's final spot threatened
                 // Final spot itself checked in final checkCheck
-                if (inCheck(colour, toAlgebraic(60) + toAlgebraic(59), kingPos))
+                if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(59), kingPos))
                 {
                     moves.push_back(toAlgebraic(60) + toAlgebraic(58));
                 }
             }
             // Kingside White Castle
-            if (castleableWK && square[61].x == Piece::None && square[62].x == Piece::None) {
+            if (castleableWK && (square[61].x == Piece::None) && (square[62].x == Piece::None)) {
                 // Check if any of path to King's final spot threatened
                 // Final spot itself checked in final checkCheck
-                if (inCheck(colour, toAlgebraic(60) + toAlgebraic(61), kingPos))
+                if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(61), kingPos))
                 {
                     moves.push_back(toAlgebraic(60) + toAlgebraic(62));
                 }
@@ -890,7 +901,7 @@ public:
       if (square[i].x == 0 || i == from)
         continue;
       // treat 'to' as own piece
-      else if (square[i].x & colour || i == to)
+      else if ((square[i].x & colour) || i == to)
         break;
       else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
       {
@@ -951,7 +962,7 @@ public:
       {
         return (true);
       }
-      else if (square[i].x & Piece::Pawn && curKingPos - i <= 8 && colour & Piece::White)
+      else if (square[i].x & Piece::Pawn && curKingPos - i <= 8 && (colour & Piece::White))
       {
         return (true);
       }
@@ -962,7 +973,7 @@ public:
     {
       if (square[i].x == 0 || i == from)
         continue;
-      else if (square[i].x & colour || i == to)
+      else if ((square[i].x & colour) || i == to)
         break;
       else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
       {

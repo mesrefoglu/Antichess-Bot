@@ -4,7 +4,7 @@
 #include <bitset>
 using namespace std;
 #ifndef DEPTH
-#define DEPTH 7
+#define DEPTH 5
 #endif
 
 class Piece
@@ -703,6 +703,45 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
         }
         // Castling
+        if (!takeFound && !checked)
+        {
+            // Queenside Black Castle
+            if (castleableBQ && (square[3].x == Piece::None) && (square[2].x == Piece::None) && (square[1].x == Piece::None)) {
+                // Check if any of path to King's final spot threatened
+                // Final spot itself checked in final checkCheck
+                if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(3), kingPos))
+                {
+                    moves.push_back(toAlgebraic(4) + toAlgebraic(2));
+                }
+            }
+            // Kingside Black Castle 
+            if (castleableBK && (square[5].x == Piece::None) && (square[6].x == Piece::None)) {
+                // Check if any of path to King's final spot threatened
+                // Final spot itself checked in final checkCheck
+                if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(5), kingPos))
+                {
+                    moves.push_back(toAlgebraic(4) + toAlgebraic(6));
+                }
+            }
+            // Queenside White Castle
+            if (castleableWQ && (square[59].x == Piece::None) && (square[58].x == Piece::None) && (square[57].x == Piece::None)) {
+                // Check if any of path to King's final spot threatened
+                // Final spot itself checked in final checkCheck
+                if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(59), kingPos))
+                {
+                    moves.push_back(toAlgebraic(60) + toAlgebraic(58));
+                }
+            }
+            // Kingside White Castle
+            if (castleableWK && (square[61].x == Piece::None) && (square[62].x == Piece::None)) {
+                // Check if any of path to King's final spot threatened
+                // Final spot itself checked in final checkCheck
+                if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(61), kingPos))
+                {
+                    moves.push_back(toAlgebraic(60) + toAlgebraic(62));
+                }
+            }
+        }
       }
     }
     // Check Move validation
@@ -1124,6 +1163,8 @@ public:
     int bestScore = colour == Piece::White ? -100000 : 100000;
     string bestMove = "";
     vector<string> moves = findPossibleMoves(colour);
+    if (moves.size() == 1)
+      return moves[0];
     for (int i = 0; i < moves.size(); i++)
     {
       Board board = *this;
