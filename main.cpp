@@ -1261,9 +1261,12 @@ void aiMove(Board &board, uint8_t ai)
 {
   vector<string> moves = board.findPossibleMoves(ai);
   int kingPos = board.kingFind(ai);
-  if (moves.size() == 0 && board.inCheck(ai, board.toAlgebraic(kingPos) + board.toAlgebraic(kingPos), kingPos))
+  if (moves.size() == 0)
   {
-    cout << (ai == Piece::White ? "White" : "Black") << " got checkmated." << endl;
+    if (board.inCheck(ai, board.toAlgebraic(kingPos) + board.toAlgebraic(kingPos), kingPos))
+      cout << (ai == Piece::White ? "White" : "Black") << " got checkmated." << endl;
+    else
+      cout << "Stalemate." << endl;
     return;
   }
   for (int i = 0; i < moves.size(); i++)
