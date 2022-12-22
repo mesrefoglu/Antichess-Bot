@@ -1,11 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <bitset>
 using namespace std;
-#ifndef DEPTH
-#define DEPTH 5
-#endif
 
 class Piece
 {
@@ -575,123 +571,6 @@ public:
     return (checkedMoves);
   }
 
-  //// Returns true if the king of the given colour is in check
-  // bool inCheck(uint8_t colour, int i = -1) // i is the index of the king
-  //{
-  //   uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
-  //   // Look around the king to see any threats
-  //   if (i == -1)
-  //   {
-  //     for (int j = 0; j < 64; j++)
-  //     {
-  //       if (square[i].x == (Piece::King | colour))
-  //       {
-  //         i = j;
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   // Check for pawns
-  //   if (colour == Piece::White)
-  //   {
-  //     if (i - 7 >= 0 && i % 8 + 1 < 8 && square[i - 7].x == (Piece::Pawn | opposite))
-  //       return true;
-  //     if (i - 9 >= 0 && i % 8 - 1 >= 0 && square[i - 9].x == (Piece::Pawn | opposite))
-  //       return true;
-  //   }
-  //   else
-  //   {
-  //     if (i + 7 >= 0 && i % 8 - 1 >= 0 && square[i + 7].x == (Piece::Pawn | opposite))
-  //       return true;
-  //     if (i + 9 >= 0 && i % 8 + 1 < 8 && square[i + 9].x == (Piece::Pawn | opposite))
-  //       return true;
-  //   }
-  //   // Check for knights
-  //   if (i - 15 >= 0 && i % 8 + 1 < 8 && square[i - 15].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i - 6 >= 0 && i % 8 + 2 < 8 && square[i - 6].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i + 10 >= 0 && i % 8 + 2 < 8 && square[i + 10].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i + 17 >= 0 && i % 8 + 1 < 8 && square[i + 17].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i + 15 >= 0 && i % 8 - 1 >= 0 && square[i + 15].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i + 6 >= 0 && i % 8 - 2 >= 0 && square[i + 6].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i - 10 >= 0 && i % 8 - 2 >= 0 && square[i - 10].x == (Piece::Knight | opposite))
-  //     return true;
-  //   if (i - 17 >= 0 && i % 8 - 1 >= 0 && square[i - 17].x == (Piece::Knight | opposite))
-  //     return true;
-  //   // Check for rooks and queens
-  //   // North
-  //   for (int j = i - 8; j >= 0; j -= 8)
-  //   {
-  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // East
-  //   for (int j = i + 1; j % 8 != 0; j++)
-  //   {
-  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // South
-  //   for (int j = i + 8; j < 64; j += 8)
-  //   {
-  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // West
-  //   for (int j = i - 1; j % 8 != 7; j--)
-  //   {
-  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // Check for bishops and queens
-  //   // North East
-  //   for (int j = i - 7; j >= 0 && j % 8 != 0; j -= 7)
-  //   {
-  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // South East
-  //   for (int j = i + 9; j < 64 && j % 8 != 0; j += 9)
-  //   {
-  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // South West
-  //   for (int j = i + 7; j < 64 && j % 8 != 7; j += 7)
-  //   {
-  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   // North West
-  //   for (int j = i - 9; j >= 0 && j % 8 != 7; j -= 9)
-  //   {
-  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //       return true;
-  //     if (square[j].x != Piece::None)
-  //       break;
-  //   }
-  //   return false;
-  // }
-
   bool inCheck(uint8_t colour, string move, int kingPos)
   {
     uint8_t opposite = (colour == Piece::White ? Piece::Black : Piece::White);
@@ -967,9 +846,8 @@ public:
     return (kingPos);
   }
 
-  string bestMove(uint8_t colour)
+  string bestMove(uint8_t colour, int depth)
   {
-    int depth = DEPTH;
     int bestScore = colour == Piece::White ? -100000 : 100000;
     string bestMove = "";
     vector<string> moves = findPossibleMoves(colour);
@@ -1033,82 +911,10 @@ public:
       }
       return bestScore;
     }
-    /*
-    if (depth == 0)
-      return evaluate();
-    int bestScore = colour == Piece::White ? -100000 : 100000;
-    vector<string> moves = findPossibleMoves(colour);
-    for (int i = 0; i < moves.size(); i++)
-    {
-      Board board = *this;
-      board.makeMove(moves[i]);
-      int score = board.minimax(depth - 1, colour == Piece::White ? Piece::Black : Piece::White);
-      if (colour == Piece::White && score > bestScore)
-        bestScore = score;
-      else if (colour == Piece::Black && score < bestScore)
-        bestScore = score;
-    }
-    return bestScore;
-    */
-  }
-
-  // Print the board
-  void print()
-  {
-    for (int i = 0; i < 64; i++)
-    {
-      string piece;
-      switch (square[i].x)
-      {
-      case Piece::None:
-        piece = "--";
-        break;
-      case Piece::Pawn | Piece::White:
-        piece = "WP";
-        break;
-      case Piece::Pawn | Piece::Black:
-        piece = "BP";
-        break;
-      case Piece::Bishop | Piece::White:
-        piece = "WB";
-        break;
-      case Piece::Bishop | Piece::Black:
-        piece = "BB";
-        break;
-      case Piece::Knight | Piece::White:
-        piece = "WN";
-        break;
-      case Piece::Knight | Piece::Black:
-        piece = "BN";
-        break;
-      case Piece::Rook | Piece::White:
-        piece = "WR";
-        break;
-      case Piece::Rook | Piece::Black:
-        piece = "BR";
-        break;
-      case Piece::Queen | Piece::White:
-        piece = "WQ";
-        break;
-      case Piece::Queen | Piece::Black:
-        piece = "BQ";
-        break;
-      case Piece::King | Piece::White:
-        piece = "WK";
-        break;
-      case Piece::King | Piece::Black:
-        piece = "BK";
-        break;
-      }
-      cout << piece << " ";
-      if ((i + 1) % 8 == 0)
-        cout << endl;
-    }
-    cout << "Evaluation: " << evaluate() << endl;
   }
 };
 
-void aiMove(Board &board, uint8_t ai)
+void aiMove(Board &board, uint8_t ai, int depth)
 {
   vector<string> moves = board.findPossibleMoves(ai);
   int kingPos = board.kingFind(ai);
@@ -1120,56 +926,59 @@ void aiMove(Board &board, uint8_t ai)
       cout << "Stalemate." << endl;
     return;
   }
-  for (int i = 0; i < moves.size(); i++)
-    cout << moves[i] << ",";
-  string bestMove = board.bestMove(ai);
-  cout << endl
-       << "Making move: " << bestMove << endl;
+  string bestMove = board.bestMove(ai, depth);
+  if (bestMove == "")
+    bestMove = moves[0];
+  cout << bestMove << endl;
   board.makeMove(bestMove);
-  board.print();
 }
 void playerMove(Board &board)
 {
   string move;
-  cout << "Make a move..." << endl;
   cin >> move;
   board.makeMove(move);
-  board.print();
 }
 void moveIterator(int argc, char *argv[])
 {
   Board board;
-  board.print();
   string move;
-  if (argc == 1) // player vs player for testing
-  {
-    while (true)
-      playerMove(board);
-    return;
-  }
-
   string aiColorStr = argv[1];
-  if (aiColorStr == "both")
-  {
-    while (true)
-    {
-      system("pause");
-      aiMove(board, Piece::White);
-      system("pause");
-      aiMove(board, Piece::Black);
-    }
-    return;
-  }
   uint8_t ai = aiColorStr == "white" ? Piece::White : Piece::Black;
+  int moveCounter = 0;
+  int depth = 5;
 
   if (ai == Piece::White) // ai is white, player is black
   {
-    aiMove(board, ai);
+    aiMove(board, ai, depth);
+    moveCounter++;
+    if (moveCounter >= 7)
+    {
+      moveCounter = 0;
+      depth++;
+      if (depth == 9)
+        depth = 8;
+    }
   }
   while (true)
   {
     playerMove(board);
-    aiMove(board, ai);
+    moveCounter++;
+    if (moveCounter >= 7)
+    {
+      moveCounter = 0;
+      depth++;
+      if (depth == 9)
+        depth = 8;
+    }
+    aiMove(board, ai, depth);
+    moveCounter++;
+    if (moveCounter >= 7)
+    {
+      moveCounter = 0;
+      depth++;
+      if (depth == 9)
+        depth = 8;
+    }
   }
 }
 int main(int argc, char *argv[])
