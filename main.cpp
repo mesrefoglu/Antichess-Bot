@@ -4,7 +4,7 @@
 #include <bitset>
 using namespace std;
 #ifndef DEPTH
-#define DEPTH 5
+#define DEPTH 7
 #endif
 
 class Piece
@@ -166,7 +166,7 @@ public:
     vector<string> moves;
     vector<string> secondary;
     int kingPos = kingFind(colour);
-    bool checked = inCheck(colour,toAlgebraic(kingPos)+toAlgebraic(kingPos), kingPos);
+    bool checked = inCheck(colour, toAlgebraic(kingPos) + toAlgebraic(kingPos), kingPos);
     uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
     bool takeFound = false;
     for (int i = 0; i < 64; i++)
@@ -190,8 +190,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
         }
         for (int j = 1; i + j * 7 < 64 && i % 8 - j >= 0; j++)
         {
@@ -207,8 +209,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
         }
         for (int j = 1; i - j * 9 >= 0 && i % 8 - j >= 0; j++)
         {
@@ -224,8 +228,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
         }
         for (int j = 1; i - j * 7 >= 0 && i % 8 + j < 8; j++)
         {
@@ -241,8 +247,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
         }
       }
       if (piece == Piece::Rook || piece == Piece::Queen)
@@ -261,8 +269,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + j));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j));
         }
         for (int j = 1; i - j >= 0 && i % 8 - j >= 0; j++)
         {
@@ -278,8 +288,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - j));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j));
         }
         for (int j = 1; i + j * 8 < 64; j++)
         {
@@ -295,8 +307,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
         }
         for (int j = 1; i - j * 8 >= 0; j++)
         {
@@ -312,8 +326,10 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
             break;
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
         }
       }
       else if (piece == Piece::Pawn)
@@ -356,11 +372,11 @@ public:
           }
           if (square[i - 8].x == Piece::None && checked)
           {
-              // Check for promotion
-              if (i - 8 < 8)
-                  secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
-              else
-                  secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+            // Check for promotion
+            if (i - 8 < 8)
+              secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
+            else
+              secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
           if (!takeFound && !square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None && !checked)
           {
@@ -368,7 +384,7 @@ public:
           }
           if (!square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None && checked)
           {
-              secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 16));
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 16));
           }
         }
         else
@@ -409,11 +425,11 @@ public:
           }
           if (square[i + 8].x == Piece::None && checked)
           {
-              // Check for promotion
-              if (i + 8 >= 56)
-                  secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
-              else
-                  secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+            // Check for promotion
+            if (i + 8 >= 56)
+              secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
+            else
+              secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
           if (!takeFound && !square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None && !checked)
           {
@@ -421,7 +437,7 @@ public:
           }
           if (!square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None && checked)
           {
-              secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 16));
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 16));
           }
         }
       }
@@ -438,8 +454,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
         }
         if (i + 15 < 64 && i % 8 >= 1 && !(square[i + 15].x & colour))
         {
@@ -452,8 +470,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
         }
         if (i + 10 < 64 && i % 8 <= 5 && !(square[i + 10].x & colour))
         {
@@ -466,8 +486,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
         }
         if (i + 6 < 64 && i % 8 >= 2 && !(square[i + 6].x & colour))
         {
@@ -480,8 +502,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
         }
         if (i - 17 >= 0 && i % 8 >= 1 && !(square[i - 17].x & colour))
         {
@@ -494,8 +518,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
         }
         if (i - 15 >= 0 && i % 8 <= 6 && !(square[i - 15].x & colour))
         {
@@ -508,8 +534,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
         }
         if (i - 10 >= 0 && i % 8 >= 2 && !(square[i - 10].x & colour))
         {
@@ -522,8 +550,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
         }
         if (i - 6 >= 0 && i % 8 <= 5 && !(square[i - 6].x & colour))
         {
@@ -536,8 +566,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
         }
       }
       else if (piece == Piece::King)
@@ -553,8 +585,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
         }
         if (i - 1 >= 0 && i % 8 - 1 >= 0 && !(square[i - 1].x & colour))
         {
@@ -567,8 +601,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
         }
         if (i + 8 < 64 && !(square[i + 8].x & colour))
         {
@@ -581,8 +617,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
         }
         if (i - 8 >= 0 && !(square[i - 8].x & colour))
         {
@@ -595,8 +633,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
         }
         if (i + 9 < 64 && i % 8 + 1 < 8 && !(square[i + 9].x & colour))
         {
@@ -609,8 +649,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
         }
         if (i - 9 >= 0 && i % 8 - 1 >= 0 && !(square[i - 9].x & colour))
         {
@@ -623,8 +665,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
         }
         if (i + 7 < 64 && i % 8 - 1 >= 0 && !(square[i + 7].x & colour))
         {
@@ -637,8 +681,10 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
-          else if (checked) secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+          else if (checked)
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
         }
         if (i - 7 >= 0 && i % 8 + 1 < 8 && !(square[i - 7].x & colour))
         {
@@ -651,147 +697,154 @@ public:
             }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
           }
-          else if (!takeFound && !checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
-          else if (checked) moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
+          else if (!takeFound && !checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
+          else if (checked)
+            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
         }
         // Castling
       }
     }
     // Check Move validation
     vector<string> checkedMoves;
-    for (auto move : moves) {
-        if (inCheck(colour, move, kingPos) == false) checkedMoves.emplace_back(move);
+    for (auto move : moves)
+    {
+      if (inCheck(colour, move, kingPos) == false)
+        checkedMoves.emplace_back(move);
     }
 
     // Check if we need to go to secondary moves
-    if (checked && checkedMoves.size() == 0) {
-        for (auto move : secondary) {
-            if (inCheck(colour, move, kingPos) == false) checkedMoves.emplace_back(move);
-        }
+    if (checked && checkedMoves.size() == 0)
+    {
+      for (auto move : secondary)
+      {
+        if (inCheck(colour, move, kingPos) == false)
+          checkedMoves.emplace_back(move);
+      }
     }
 
-    return(checkedMoves);
+    return (checkedMoves);
   }
 
   //// Returns true if the king of the given colour is in check
-  //bool inCheck(uint8_t colour, int i = -1) // i is the index of the king
+  // bool inCheck(uint8_t colour, int i = -1) // i is the index of the king
   //{
-  //  uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
-  //  // Look around the king to see any threats
-  //  if (i == -1)
-  //  {
-  //    for (int j = 0; j < 64; j++)
-  //    {
-  //      if (square[i].x == (Piece::King | colour))
-  //      {
-  //        i = j;
-  //        break;
-  //      }
-  //    }
-  //  }
-  //  // Check for pawns
-  //  if (colour == Piece::White)
-  //  {
-  //    if (i - 7 >= 0 && i % 8 + 1 < 8 && square[i - 7].x == (Piece::Pawn | opposite))
-  //      return true;
-  //    if (i - 9 >= 0 && i % 8 - 1 >= 0 && square[i - 9].x == (Piece::Pawn | opposite))
-  //      return true;
-  //  }
-  //  else
-  //  {
-  //    if (i + 7 >= 0 && i % 8 - 1 >= 0 && square[i + 7].x == (Piece::Pawn | opposite))
-  //      return true;
-  //    if (i + 9 >= 0 && i % 8 + 1 < 8 && square[i + 9].x == (Piece::Pawn | opposite))
-  //      return true;
-  //  }
-  //  // Check for knights
-  //  if (i - 15 >= 0 && i % 8 + 1 < 8 && square[i - 15].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i - 6 >= 0 && i % 8 + 2 < 8 && square[i - 6].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i + 10 >= 0 && i % 8 + 2 < 8 && square[i + 10].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i + 17 >= 0 && i % 8 + 1 < 8 && square[i + 17].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i + 15 >= 0 && i % 8 - 1 >= 0 && square[i + 15].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i + 6 >= 0 && i % 8 - 2 >= 0 && square[i + 6].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i - 10 >= 0 && i % 8 - 2 >= 0 && square[i - 10].x == (Piece::Knight | opposite))
-  //    return true;
-  //  if (i - 17 >= 0 && i % 8 - 1 >= 0 && square[i - 17].x == (Piece::Knight | opposite))
-  //    return true;
-  //  // Check for rooks and queens
-  //  // North
-  //  for (int j = i - 8; j >= 0; j -= 8)
-  //  {
-  //    if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // East
-  //  for (int j = i + 1; j % 8 != 0; j++)
-  //  {
-  //    if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // South
-  //  for (int j = i + 8; j < 64; j += 8)
-  //  {
-  //    if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // West
-  //  for (int j = i - 1; j % 8 != 7; j--)
-  //  {
-  //    if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // Check for bishops and queens
-  //  // North East
-  //  for (int j = i - 7; j >= 0 && j % 8 != 0; j -= 7)
-  //  {
-  //    if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // South East
-  //  for (int j = i + 9; j < 64 && j % 8 != 0; j += 9)
-  //  {
-  //    if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // South West
-  //  for (int j = i + 7; j < 64 && j % 8 != 7; j += 7)
-  //  {
-  //    if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  // North West
-  //  for (int j = i - 9; j >= 0 && j % 8 != 7; j -= 9)
-  //  {
-  //    if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
-  //      return true;
-  //    if (square[j].x != Piece::None)
-  //      break;
-  //  }
-  //  return false;
-  //}
+  //   uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
+  //   // Look around the king to see any threats
+  //   if (i == -1)
+  //   {
+  //     for (int j = 0; j < 64; j++)
+  //     {
+  //       if (square[i].x == (Piece::King | colour))
+  //       {
+  //         i = j;
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   // Check for pawns
+  //   if (colour == Piece::White)
+  //   {
+  //     if (i - 7 >= 0 && i % 8 + 1 < 8 && square[i - 7].x == (Piece::Pawn | opposite))
+  //       return true;
+  //     if (i - 9 >= 0 && i % 8 - 1 >= 0 && square[i - 9].x == (Piece::Pawn | opposite))
+  //       return true;
+  //   }
+  //   else
+  //   {
+  //     if (i + 7 >= 0 && i % 8 - 1 >= 0 && square[i + 7].x == (Piece::Pawn | opposite))
+  //       return true;
+  //     if (i + 9 >= 0 && i % 8 + 1 < 8 && square[i + 9].x == (Piece::Pawn | opposite))
+  //       return true;
+  //   }
+  //   // Check for knights
+  //   if (i - 15 >= 0 && i % 8 + 1 < 8 && square[i - 15].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i - 6 >= 0 && i % 8 + 2 < 8 && square[i - 6].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i + 10 >= 0 && i % 8 + 2 < 8 && square[i + 10].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i + 17 >= 0 && i % 8 + 1 < 8 && square[i + 17].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i + 15 >= 0 && i % 8 - 1 >= 0 && square[i + 15].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i + 6 >= 0 && i % 8 - 2 >= 0 && square[i + 6].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i - 10 >= 0 && i % 8 - 2 >= 0 && square[i - 10].x == (Piece::Knight | opposite))
+  //     return true;
+  //   if (i - 17 >= 0 && i % 8 - 1 >= 0 && square[i - 17].x == (Piece::Knight | opposite))
+  //     return true;
+  //   // Check for rooks and queens
+  //   // North
+  //   for (int j = i - 8; j >= 0; j -= 8)
+  //   {
+  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // East
+  //   for (int j = i + 1; j % 8 != 0; j++)
+  //   {
+  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // South
+  //   for (int j = i + 8; j < 64; j += 8)
+  //   {
+  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // West
+  //   for (int j = i - 1; j % 8 != 7; j--)
+  //   {
+  //     if (square[j].x == (Piece::Rook | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // Check for bishops and queens
+  //   // North East
+  //   for (int j = i - 7; j >= 0 && j % 8 != 0; j -= 7)
+  //   {
+  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // South East
+  //   for (int j = i + 9; j < 64 && j % 8 != 0; j += 9)
+  //   {
+  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // South West
+  //   for (int j = i + 7; j < 64 && j % 8 != 7; j += 7)
+  //   {
+  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   // North West
+  //   for (int j = i - 9; j >= 0 && j % 8 != 7; j -= 9)
+  //   {
+  //     if (square[j].x == (Piece::Bishop | opposite) || square[j].x == (Piece::Queen | opposite))
+  //       return true;
+  //     if (square[j].x != Piece::None)
+  //       break;
+  //   }
+  //   return false;
+  // }
 
-bool inCheck(uint8_t colour, string move, int kingPos)
-{
+  bool inCheck(uint8_t colour, string move, int kingPos)
+  {
     uint8_t opposite = (colour == Piece::White ? Piece::Black : Piece::White);
     // Treat 'to' as impassable
     //    'from' as empty
@@ -801,202 +854,204 @@ bool inCheck(uint8_t colour, string move, int kingPos)
     int curKingPos = kingPos;
     // Change curKingPos if King was the piece which moved
     if (from == kingPos)
-        curKingPos = to;
+      curKingPos = to;
     // Clockwise rotation around King
     for (int i = curKingPos - 8; i >= 0; i -= 8)
     {
-        // treat 'from' as empty
-        if (square[i].x == 0 || i == from)
-            continue;
-        // treat 'to' as own piece
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && curKingPos - i <= 8)
-        {
-            return(true);
-        }
-        else break;
+      // treat 'from' as empty
+      if (square[i].x == 0 || i == from)
+        continue;
+      // treat 'to' as own piece
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && curKingPos - i <= 8)
+      {
+        return (true);
+      }
+      else
+        break;
     }
     // Check for Knights
     if ((curKingPos - 17 >= 0) && (curKingPos - 17 % 8 != 7) && square[curKingPos - 17].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos - 15 >= 0) && (curKingPos - 15 % 8 != 0) && square[curKingPos - 15].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos - 10 >= 0) && (curKingPos - 10 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos - 10].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos - 6 >= 0) && (curKingPos - 6 % 8 != 0) && (curKingPos - 6 % 8 != 1) && square[curKingPos - 6].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos + 6 <= 63) && (curKingPos + 6 % 8 != 6) && (curKingPos - 10 % 8 != 7) && square[curKingPos + 6].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos + 15 <= 63) && (curKingPos + 15 % 8 != 7) && square[curKingPos + 15].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     else if ((curKingPos + 17 <= 63) && (curKingPos + 17 % 8 != 0) && square[curKingPos + 17].x == (opposite | Piece::Knight))
     {
-        return(true);
+      return (true);
     }
     // NE, E, SE, S, SW, W, NW
     for (int i = curKingPos - 7; i >= 0 && i % 8 != 0; i -= 7)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && curKingPos - i <= 7)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::Pawn && curKingPos - i <= 8 && colour & Piece::White)
-        {
-            return(true);
-        }
-        else break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && curKingPos - i <= 7)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::Pawn && curKingPos - i <= 8 && colour & Piece::White)
+      {
+        return (true);
+      }
+      else
+        break;
     }
     for (int i = curKingPos + 1; i % 8 != 0; i++)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && i - curKingPos <= 1)
-        {
-            return(true);
-        }
-        else
-            break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && i - curKingPos <= 1)
+      {
+        return (true);
+      }
+      else
+        break;
     }
 
     for (int i = curKingPos + 9; i <= 63 && i % 8 != 0; i += 9)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && i - curKingPos <= 9)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::Pawn && i - curKingPos <= 9 && colour & Piece::Black)
-        {
-            return(true);
-        }
-        else
-            break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && i - curKingPos <= 9)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::Pawn && i - curKingPos <= 9 && colour & Piece::Black)
+      {
+        return (true);
+      }
+      else
+        break;
     }
 
     for (int i = curKingPos + 8; i <= 63; i += 8)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && i - curKingPos <= 8)
-        {
-            return(true);
-        }
-        else
-            break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && i - curKingPos <= 8)
+      {
+        return (true);
+      }
+      else
+        break;
     }
 
     for (int i = curKingPos + 7; i <= 63 && i % 8 != 7; i += 7)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && i - curKingPos <= 7)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::Pawn && i - curKingPos <= 8 && colour & Piece::Black)
-        {
-            return(true);
-        }
-        else
-            break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && i - curKingPos <= 7)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::Pawn && i - curKingPos <= 8 && colour & Piece::Black)
+      {
+        return (true);
+      }
+      else
+        break;
     }
 
     for (int i = curKingPos - 1; i % 8 != 7; i--)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && curKingPos - i <= 1)
-        {
-            return(true);
-        }
-        else
-            break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Rook)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && curKingPos - i <= 1)
+      {
+        return (true);
+      }
+      else
+        break;
     }
 
     for (int i = curKingPos - 9; i >= 0 && i % 8 != 7; i -= 9)
     {
-        if (square[i].x == 0 || i == from)
-            continue;
-        else if (square[i].x & colour || i == to)
-            break;
-        else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::King && curKingPos - i <= 9)
-        {
-            return(true);
-        }
-        else if (square[i].x & Piece::Pawn && curKingPos - i <= 9 && colour & Piece::White)
-        {
-            return(true);
-        }
-        else
-            break;
+      if (square[i].x == 0 || i == from)
+        continue;
+      else if (square[i].x & colour || i == to)
+        break;
+      else if (square[i].x & Piece::Queen || square[i].x & Piece::Bishop)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::King && curKingPos - i <= 9)
+      {
+        return (true);
+      }
+      else if (square[i].x & Piece::Pawn && curKingPos - i <= 9 && colour & Piece::White)
+      {
+        return (true);
+      }
+      else
+        break;
     }
 
-    return(false);
-}
+    return (false);
+  }
 
   // Evaluates the board and returns a score
   int evaluate()
@@ -1049,15 +1104,18 @@ bool inCheck(uint8_t colour, string move, int kingPos)
     return score;
   }
 
-  int kingFind(uint8_t colour) {
-      int kingPos = -1;
-      for (int i = 0; i < 63; i++) {
-          if (square[i].x == colour + Piece::King) {
-              kingPos = i;
-              break;
-          }
+  int kingFind(uint8_t colour)
+  {
+    int kingPos = -1;
+    for (int i = 0; i < 63; i++)
+    {
+      if (square[i].x == colour + Piece::King)
+      {
+        kingPos = i;
+        break;
       }
-      return(kingPos);
+    }
+    return (kingPos);
   }
 
   string bestMove(uint8_t colour)
@@ -1085,8 +1143,46 @@ bool inCheck(uint8_t colour, string move, int kingPos)
     return bestMove;
   }
 
-  int minimax(int depth, uint8_t colour)
+  int minimax(int depth, uint8_t colour, int alpha = -100000, int beta = 100000)
   {
+    if (depth == 0)
+      return evaluate();
+    vector<string> moves = findPossibleMoves(colour);
+    if (colour == Piece::White)
+    {
+      int bestScore = -100000;
+      for (int i = 0; i < moves.size(); i++)
+      {
+        Board board = *this;
+        board.makeMove(moves[i]);
+        int score = board.minimax(depth - 1, Piece::Black, alpha, beta);
+        bestScore = max(bestScore, score);
+        alpha = max(alpha, score);
+        if (beta <= alpha)
+        {
+          break;
+        }
+      }
+      return bestScore;
+    }
+    else
+    {
+      int bestScore = 100000;
+      for (int i = 0; i < moves.size(); i++)
+      {
+        Board board = *this;
+        board.makeMove(moves[i]);
+        int score = board.minimax(depth - 1, Piece::White, alpha, beta);
+        bestScore = min(bestScore, score);
+        beta = min(beta, score);
+        if (beta <= alpha)
+        {
+          break;
+        }
+      }
+      return bestScore;
+    }
+    /*
     if (depth == 0)
       return evaluate();
     int bestScore = colour == Piece::White ? -100000 : 100000;
@@ -1102,6 +1198,7 @@ bool inCheck(uint8_t colour, string move, int kingPos)
         bestScore = score;
     }
     return bestScore;
+    */
   }
 
   // Print the board
@@ -1163,6 +1260,12 @@ bool inCheck(uint8_t colour, string move, int kingPos)
 void aiMove(Board &board, uint8_t ai)
 {
   vector<string> moves = board.findPossibleMoves(ai);
+  int kingPos = board.kingFind(ai);
+  if (moves.size() == 0 && board.inCheck(ai, board.toAlgebraic(kingPos) + board.toAlgebraic(kingPos), kingPos))
+  {
+    cout << (ai == Piece::White ? "White" : "Black") << " got checkmated." << endl;
+    return;
+  }
   for (int i = 0; i < moves.size(); i++)
     cout << moves[i] << ",";
   string bestMove = board.bestMove(ai);
