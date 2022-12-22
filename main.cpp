@@ -39,30 +39,29 @@ public:
   // Initialize the board
   Board()
   {
-      // Set up the starting position
-      square[0] = Piece(Piece::Rook | Piece::Black);
-      square[1] = Piece(Piece::Knight | Piece::Black);
-      square[2] = Piece(Piece::Bishop | Piece::Black);
-      square[3] = Piece(Piece::Queen | Piece::Black);
-      square[4] = Piece(Piece::King | Piece::Black);
-      square[5] = Piece(Piece::Bishop | Piece::Black);
-      square[6] = Piece(Piece::Knight | Piece::Black);
-      square[7] = Piece(Piece::Rook | Piece::Black);
-      for (int i = 8; i < 16; i++)
-          square[i] = Piece(Piece::Pawn | Piece::Black);
-      for (int i = 16; i < 48; i++)
-          square[i] = Piece(Piece::None);
-      for (int i = 48; i < 56; i++)
-          square[i] = Piece(Piece::Pawn | Piece::White);
-      square[56] = Piece(Piece::Rook | Piece::White);
-      square[57] = Piece(Piece::Knight | Piece::White);
-      square[58] = Piece(Piece::Bishop | Piece::White);
-      square[59] = Piece(Piece::Queen | Piece::White);
-      square[60] = Piece(Piece::King | Piece::White);
-      square[61] = Piece(Piece::Bishop | Piece::White);
-      square[62] = Piece(Piece::Knight | Piece::White);
-      square[63] = Piece(Piece::Rook | Piece::White);
-
+    // Set up the starting position
+    square[0] = Piece(Piece::Rook | Piece::Black);
+    square[1] = Piece(Piece::Knight | Piece::Black);
+    square[2] = Piece(Piece::Bishop | Piece::Black);
+    square[3] = Piece(Piece::Queen | Piece::Black);
+    square[4] = Piece(Piece::King | Piece::Black);
+    square[5] = Piece(Piece::Bishop | Piece::Black);
+    square[6] = Piece(Piece::Knight | Piece::Black);
+    square[7] = Piece(Piece::Rook | Piece::Black);
+    for (int i = 8; i < 16; i++)
+      square[i] = Piece(Piece::Pawn | Piece::Black);
+    for (int i = 16; i < 48; i++)
+      square[i] = Piece(Piece::None);
+    for (int i = 48; i < 56; i++)
+      square[i] = Piece(Piece::Pawn | Piece::White);
+    square[56] = Piece(Piece::Rook | Piece::White);
+    square[57] = Piece(Piece::Knight | Piece::White);
+    square[58] = Piece(Piece::Bishop | Piece::White);
+    square[59] = Piece(Piece::Queen | Piece::White);
+    square[60] = Piece(Piece::King | Piece::White);
+    square[61] = Piece(Piece::Bishop | Piece::White);
+    square[62] = Piece(Piece::Knight | Piece::White);
+    square[63] = Piece(Piece::Rook | Piece::White);
   }
 
   // Makes move given input, no move validation
@@ -185,7 +184,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
         }
         for (int j = 1; i + j * 7 < 64 && i % 8 - j >= 0; j++)
         {
@@ -196,7 +196,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
         }
         for (int j = 1; i - j * 9 >= 0 && i % 8 - j >= 0; j++)
         {
@@ -207,7 +208,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
         }
         for (int j = 1; i - j * 7 >= 0 && i % 8 + j < 8; j++)
         {
@@ -218,7 +220,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
         }
       }
       if (piece == Piece::Rook || piece == Piece::Queen)
@@ -232,7 +235,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j));
         }
         for (int j = 1; i - j >= 0 && i % 8 - j >= 0; j++)
         {
@@ -243,7 +247,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j));
         }
         for (int j = 1; i + j * 8 < 64; j++)
         {
@@ -254,7 +259,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
         }
         for (int j = 1; i - j * 8 >= 0; j++)
         {
@@ -265,7 +271,8 @@ public:
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
             break;
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
         }
       }
       else if (piece == Piece::Pawn)
@@ -274,7 +281,7 @@ public:
         {
           if (i % 8 != 7 && (square[i - 7].x & opposite || enPassantable == i - 7))
           {
-            
+
             // Check for promotion
             if (i - 7 < 8)
               moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7) + 'q');
@@ -283,7 +290,7 @@ public:
           }
           if (i % 8 != 0 && (square[i - 9].x & opposite || enPassantable == i - 9))
           {
-            
+
             // Check for promotion
             if (i - 9 < 8)
               moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9) + 'q');
@@ -347,7 +354,8 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
         }
         if (i + 15 < 64 && i % 8 >= 1 && !(square[i + 15].x & colour))
         {
@@ -356,7 +364,8 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
         }
         if (i + 10 < 64 && i % 8 <= 5 && !(square[i + 10].x & colour))
         {
@@ -365,16 +374,18 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
         }
         if (i + 6 < 64 && i % 8 >= 2 && !(square[i + 6].x & colour))
         {
           if (square[i + 6].x & opposite)
           {
- 
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
         }
         if (i - 17 >= 0 && i % 8 >= 1 && !(square[i - 17].x & colour))
         {
@@ -383,7 +394,8 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
         }
         if (i - 15 >= 0 && i % 8 <= 6 && !(square[i - 15].x & colour))
         {
@@ -391,7 +403,8 @@ public:
           {
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
         }
         if (i - 10 >= 0 && i % 8 >= 2 && !(square[i - 10].x & colour))
         {
@@ -400,16 +413,18 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
         }
         if (i - 6 >= 0 && i % 8 <= 5 && !(square[i - 6].x & colour))
         {
           if (square[i - 6].x & opposite)
           {
- 
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
         }
       }
       else if (piece == Piece::King)
@@ -420,7 +435,8 @@ public:
           {
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
         }
         if (i - 1 >= 0 && i % 8 - 1 >= 0 && !(square[i - 1].x & colour))
         {
@@ -429,16 +445,18 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
         }
         if (i + 8 < 64 && !(square[i + 8].x & colour))
         {
           if (square[i + 8].x & opposite)
           {
- 
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
         }
         if (i - 8 >= 0 && !(square[i - 8].x & colour))
         {
@@ -447,7 +465,8 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
         }
         if (i + 9 < 64 && i % 8 + 1 < 8 && !(square[i + 9].x & colour))
         {
@@ -456,16 +475,18 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
         }
         if (i - 9 >= 0 && i % 8 - 1 >= 0 && !(square[i - 9].x & colour))
         {
           if (square[i - 9].x & opposite)
           {
- 
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
         }
         if (i + 7 < 64 && i % 8 - 1 >= 0 && !(square[i + 7].x & colour))
         {
@@ -474,56 +495,62 @@ public:
 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
         }
         if (i - 7 >= 0 && i % 8 + 1 < 8 && !(square[i - 7].x & colour))
         {
           if (square[i - 7].x & opposite)
           {
-  
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
           }
-          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
+          else
+            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
         }
         // Castling
         if (!checked)
         {
-            // Queenside Black Castle
-            if (castleableBQ && (square[3].x == Piece::None) && (square[2].x == Piece::None) && (square[1].x == Piece::None)) {
-                // Check if any of path to King's final spot threatened
-                // Final spot itself checked in final checkCheck
-                if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(3), kingPos))
-                {
-                    secondary.push_back(toAlgebraic(4) + toAlgebraic(2));
-                }
+          // Queenside Black Castle
+          if (castleableBQ && (square[3].x == Piece::None) && (square[2].x == Piece::None) && (square[1].x == Piece::None))
+          {
+            // Check if any of path to King's final spot threatened
+            // Final spot itself checked in final checkCheck
+            if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(3), kingPos))
+            {
+              secondary.push_back(toAlgebraic(4) + toAlgebraic(2));
             }
-            // Kingside Black Castle 
-            if (castleableBK && (square[5].x == Piece::None) && (square[6].x == Piece::None)) {
-                // Check if any of path to King's final spot threatened
-                // Final spot itself checked in final checkCheck
-                if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(5), kingPos))
-                {
-                    secondary.push_back(toAlgebraic(4) + toAlgebraic(6));
-                }
+          }
+          // Kingside Black Castle
+          if (castleableBK && (square[5].x == Piece::None) && (square[6].x == Piece::None))
+          {
+            // Check if any of path to King's final spot threatened
+            // Final spot itself checked in final checkCheck
+            if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(5), kingPos))
+            {
+              secondary.push_back(toAlgebraic(4) + toAlgebraic(6));
             }
-            // Queenside White Castle
-            if (castleableWQ && (square[59].x == Piece::None) && (square[58].x == Piece::None) && (square[57].x == Piece::None)) {
-                // Check if any of path to King's final spot threatened
-                // Final spot itself checked in final checkCheck
-                if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(59), kingPos))
-                {
-                    secondary.push_back(toAlgebraic(60) + toAlgebraic(58));
-                }
+          }
+          // Queenside White Castle
+          if (castleableWQ && (square[59].x == Piece::None) && (square[58].x == Piece::None) && (square[57].x == Piece::None))
+          {
+            // Check if any of path to King's final spot threatened
+            // Final spot itself checked in final checkCheck
+            if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(59), kingPos))
+            {
+              secondary.push_back(toAlgebraic(60) + toAlgebraic(58));
             }
-            // Kingside White Castle
-            if (castleableWK && (square[61].x == Piece::None) && (square[62].x == Piece::None)) {
-                // Check if any of path to King's final spot threatened
-                // Final spot itself checked in final checkCheck
-                if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(61), kingPos))
-                {
-                    secondary.push_back(toAlgebraic(60) + toAlgebraic(62));
-                }
+          }
+          // Kingside White Castle
+          if (castleableWK && (square[61].x == Piece::None) && (square[62].x == Piece::None))
+          {
+            // Check if any of path to King's final spot threatened
+            // Final spot itself checked in final checkCheck
+            if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(61), kingPos))
+            {
+              secondary.push_back(toAlgebraic(60) + toAlgebraic(62));
             }
+          }
         }
       }
     }
@@ -718,7 +745,7 @@ public:
     {
       return (true);
     }
-    else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x == (opposite | Piece::Knight) && curKingPos +10 != to)
+    else if ((curKingPos + 10 <= 63) && (curKingPos + 10 % 8 != 0) && (curKingPos + 10 % 8 != 1) && square[curKingPos + 10].x == (opposite | Piece::Knight) && curKingPos + 10 != to)
     {
       return (true);
     }
