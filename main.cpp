@@ -39,29 +39,30 @@ public:
   // Initialize the board
   Board()
   {
-    // Set up the starting position
-    square[0] = Piece(Piece::Rook | Piece::Black);
-    square[1] = Piece(Piece::Knight | Piece::Black);
-    square[2] = Piece(Piece::Bishop | Piece::Black);
-    square[3] = Piece(Piece::Queen | Piece::Black);
-    square[4] = Piece(Piece::King | Piece::Black);
-    square[5] = Piece(Piece::Bishop | Piece::Black);
-    square[6] = Piece(Piece::Knight | Piece::Black);
-    square[7] = Piece(Piece::Rook | Piece::Black);
-    for (int i = 8; i < 16; i++)
-      square[i] = Piece(Piece::Pawn | Piece::Black);
-    for (int i = 16; i < 48; i++)
-      square[i] = Piece(Piece::None);
-    for (int i = 48; i < 56; i++)
-      square[i] = Piece(Piece::Pawn | Piece::White);
-    square[56] = Piece(Piece::Rook | Piece::White);
-    square[57] = Piece(Piece::Knight | Piece::White);
-    square[58] = Piece(Piece::Bishop | Piece::White);
-    square[59] = Piece(Piece::Queen | Piece::White);
-    square[60] = Piece(Piece::King | Piece::White);
-    square[61] = Piece(Piece::Bishop | Piece::White);
-    square[62] = Piece(Piece::Knight | Piece::White);
-    square[63] = Piece(Piece::Rook | Piece::White);
+      // Set up the starting position
+      square[0] = Piece(Piece::Rook | Piece::Black);
+      square[1] = Piece(Piece::Knight | Piece::Black);
+      square[2] = Piece(Piece::Bishop | Piece::Black);
+      square[3] = Piece(Piece::Queen | Piece::Black);
+      square[4] = Piece(Piece::King | Piece::Black);
+      square[5] = Piece(Piece::Bishop | Piece::Black);
+      square[6] = Piece(Piece::Knight | Piece::Black);
+      square[7] = Piece(Piece::Rook | Piece::Black);
+      for (int i = 8; i < 16; i++)
+          square[i] = Piece(Piece::Pawn | Piece::Black);
+      for (int i = 16; i < 48; i++)
+          square[i] = Piece(Piece::None);
+      for (int i = 48; i < 56; i++)
+          square[i] = Piece(Piece::Pawn | Piece::White);
+      square[56] = Piece(Piece::Rook | Piece::White);
+      square[57] = Piece(Piece::Knight | Piece::White);
+      square[58] = Piece(Piece::Bishop | Piece::White);
+      square[59] = Piece(Piece::Queen | Piece::White);
+      square[60] = Piece(Piece::King | Piece::White);
+      square[61] = Piece(Piece::Bishop | Piece::White);
+      square[62] = Piece(Piece::Knight | Piece::White);
+      square[63] = Piece(Piece::Rook | Piece::White);
+
   }
 
   // Makes move given input, no move validation
@@ -168,7 +169,6 @@ public:
     int kingPos = kingFind(colour);
     bool checked = inCheck(colour, toAlgebraic(kingPos) + toAlgebraic(kingPos), kingPos);
     uint8_t opposite = colour == Piece::White ? Piece::Black : Piece::White;
-    bool takeFound = false;
     for (int i = 0; i < 64; i++)
     {
       if (!(square[i].x & colour))
@@ -182,18 +182,10 @@ public:
             break;
           if (square[i + j * 9].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 9));
         }
         for (int j = 1; i + j * 7 < 64 && i % 8 - j >= 0; j++)
         {
@@ -201,18 +193,10 @@ public:
             break;
           if (square[i + j * 7].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 7));
         }
         for (int j = 1; i - j * 9 >= 0 && i % 8 - j >= 0; j++)
         {
@@ -220,18 +204,10 @@ public:
             break;
           if (square[i - j * 9].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 9));
         }
         for (int j = 1; i - j * 7 >= 0 && i % 8 + j < 8; j++)
         {
@@ -239,18 +215,10 @@ public:
             break;
           if (square[i - j * 7].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 7));
         }
       }
       if (piece == Piece::Rook || piece == Piece::Queen)
@@ -261,18 +229,10 @@ public:
             break;
           if (square[i + j].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j));
         }
         for (int j = 1; i - j >= 0 && i % 8 - j >= 0; j++)
         {
@@ -280,18 +240,10 @@ public:
             break;
           if (square[i - j].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j));
         }
         for (int j = 1; i + j * 8 < 64; j++)
         {
@@ -299,18 +251,10 @@ public:
             break;
           if (square[i + j * 8].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + j * 8));
         }
         for (int j = 1; i - j * 8 >= 0; j++)
         {
@@ -318,18 +262,10 @@ public:
             break;
           if (square[i - j * 8].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
             break;
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - j * 8));
         }
       }
       else if (piece == Piece::Pawn)
@@ -338,11 +274,7 @@ public:
         {
           if (i % 8 != 7 && (square[i - 7].x & opposite || enPassantable == i - 7))
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+            
             // Check for promotion
             if (i - 7 < 8)
               moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7) + 'q');
@@ -351,26 +283,14 @@ public:
           }
           if (i % 8 != 0 && (square[i - 9].x & opposite || enPassantable == i - 9))
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+            
             // Check for promotion
             if (i - 9 < 8)
               moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9) + 'q');
             else
               moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
-          if (!takeFound && square[i - 8].x == Piece::None && !checked)
-          {
-            // Check for promotion
-            if (i - 8 < 8)
-              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8) + 'q');
-            else
-              moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
-          }
-          if (square[i - 8].x == Piece::None && checked)
+          if (square[i - 8].x == Piece::None)
           {
             // Check for promotion
             if (i - 8 < 8)
@@ -378,11 +298,7 @@ public:
             else
               secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
-          if (!takeFound && !square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None && !checked)
-          {
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 16));
-          }
-          if (!square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None && checked)
+          if (!square[i].hasMoved && square[i - 8].x == Piece::None && square[i - 16].x == Piece::None)
           {
             secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 16));
           }
@@ -391,11 +307,7 @@ public:
         {
           if (i % 8 != 0 && (square[i + 7].x & opposite || enPassantable == i + 7))
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             // Check for promotion
             if (i + 7 >= 56)
               moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7) + 'q');
@@ -404,26 +316,14 @@ public:
           }
           if (i % 8 != 7 && (square[i + 9].x & opposite || enPassantable == i + 9))
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             // Check for promotion
             if (i + 9 >= 56)
               moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9) + 'q');
             else
               moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
-          if (!takeFound && square[i + 8].x == Piece::None && !checked)
-          {
-            // Check for promotion
-            if (i + 8 >= 56)
-              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8) + 'q');
-            else
-              moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
-          }
-          if (square[i + 8].x == Piece::None && checked)
+
+          if (square[i + 8].x == Piece::None)
           {
             // Check for promotion
             if (i + 8 >= 56)
@@ -431,11 +331,8 @@ public:
             else
               secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
-          if (!takeFound && !square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None && !checked)
-          {
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 16));
-          }
-          if (!square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None && checked)
+
+          if (!square[i].hasMoved && square[i + 8].x == Piece::None && square[i + 16].x == Piece::None)
           {
             secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 16));
           }
@@ -447,129 +344,72 @@ public:
         {
           if (square[i + 17].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 17));
         }
         if (i + 15 < 64 && i % 8 >= 1 && !(square[i + 15].x & colour))
         {
           if (square[i + 15].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 15));
         }
         if (i + 10 < 64 && i % 8 <= 5 && !(square[i + 10].x & colour))
         {
           if (square[i + 10].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 10));
         }
         if (i + 6 < 64 && i % 8 >= 2 && !(square[i + 6].x & colour))
         {
           if (square[i + 6].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+ 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 6));
         }
         if (i - 17 >= 0 && i % 8 >= 1 && !(square[i - 17].x & colour))
         {
           if (square[i - 17].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 17));
         }
         if (i - 15 >= 0 && i % 8 <= 6 && !(square[i - 15].x & colour))
         {
           if (square[i - 15].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 15));
         }
         if (i - 10 >= 0 && i % 8 >= 2 && !(square[i - 10].x & colour))
         {
           if (square[i - 10].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 10));
         }
         if (i - 6 >= 0 && i % 8 <= 5 && !(square[i - 6].x & colour))
         {
           if (square[i - 6].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+ 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 6));
         }
       }
       else if (piece == Piece::King)
@@ -578,132 +418,75 @@ public:
         {
           if (square[i + 1].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 1));
         }
         if (i - 1 >= 0 && i % 8 - 1 >= 0 && !(square[i - 1].x & colour))
         {
           if (square[i - 1].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 1));
         }
         if (i + 8 < 64 && !(square[i + 8].x & colour))
         {
           if (square[i + 8].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+ 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 8));
         }
         if (i - 8 >= 0 && !(square[i - 8].x & colour))
         {
           if (square[i - 8].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 8));
         }
         if (i + 9 < 64 && i % 8 + 1 < 8 && !(square[i + 9].x & colour))
         {
           if (square[i + 9].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 9));
         }
         if (i - 9 >= 0 && i % 8 - 1 >= 0 && !(square[i - 9].x & colour))
         {
           if (square[i - 9].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+ 
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 9));
         }
         if (i + 7 < 64 && i % 8 - 1 >= 0 && !(square[i + 7].x & colour))
         {
           if (square[i + 7].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+
             moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i + 7));
         }
         if (i - 7 >= 0 && i % 8 + 1 < 8 && !(square[i - 7].x & colour))
         {
           if (square[i - 7].x & opposite)
           {
-            if (!takeFound)
-            {
-              takeFound = true;
-              moves.clear();
-            }
+  
             moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
           }
-          else if (!takeFound && !checked)
-            moves.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
-          else if (checked)
-            secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
+          else secondary.push_back(toAlgebraic(i) + toAlgebraic(i - 7));
         }
         // Castling
-        if (!takeFound && !checked)
+        if (!checked)
         {
             // Queenside Black Castle
             if (castleableBQ && (square[3].x == Piece::None) && (square[2].x == Piece::None) && (square[1].x == Piece::None)) {
@@ -711,7 +494,7 @@ public:
                 // Final spot itself checked in final checkCheck
                 if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(3), kingPos))
                 {
-                    moves.push_back(toAlgebraic(4) + toAlgebraic(2));
+                    secondary.push_back(toAlgebraic(4) + toAlgebraic(2));
                 }
             }
             // Kingside Black Castle 
@@ -720,7 +503,7 @@ public:
                 // Final spot itself checked in final checkCheck
                 if (!inCheck(colour, toAlgebraic(4) + toAlgebraic(5), kingPos))
                 {
-                    moves.push_back(toAlgebraic(4) + toAlgebraic(6));
+                    secondary.push_back(toAlgebraic(4) + toAlgebraic(6));
                 }
             }
             // Queenside White Castle
@@ -729,7 +512,7 @@ public:
                 // Final spot itself checked in final checkCheck
                 if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(59), kingPos))
                 {
-                    moves.push_back(toAlgebraic(60) + toAlgebraic(58));
+                    secondary.push_back(toAlgebraic(60) + toAlgebraic(58));
                 }
             }
             // Kingside White Castle
@@ -738,7 +521,7 @@ public:
                 // Final spot itself checked in final checkCheck
                 if (!inCheck(colour, toAlgebraic(60) + toAlgebraic(61), kingPos))
                 {
-                    moves.push_back(toAlgebraic(60) + toAlgebraic(62));
+                    secondary.push_back(toAlgebraic(60) + toAlgebraic(62));
                 }
             }
         }
@@ -753,7 +536,7 @@ public:
     }
 
     // Check if we need to go to secondary moves
-    if (checked && checkedMoves.size() == 0)
+    if (checkedMoves.size() == 0)
     {
       for (auto move : secondary)
       {
